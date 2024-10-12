@@ -1,0 +1,16 @@
+/* app.scss */
+
+/* Import Bootstrap variable overrides */
+@import './scss/vendors/variables.scss';
+
+/* Import Bootstrap */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/helpers';
+
+/* Import your custom styles */
+@import './scss/base/index.scss';
+@import './scss/components/index.scss';
+@import './scss/vendors/utilities.scss';
+
+/* Import Bootstrap utilities after custom styles */
+@import 'bootstrap/scss/utilities/api';

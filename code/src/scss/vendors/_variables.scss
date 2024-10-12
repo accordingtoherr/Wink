@@ -1,0 +1,73 @@
+/* variables.scss */
+
+@import '../base/colors.scss';
+// --------------------------------- //
+// BOOTSTRAP VARIABLE OVERRIDES
+// https://getbootstrap.com/docs/5.0/customize/sass/#variable-defaults
+// --------------------------------- //
+// -- Theme colors can be found in _colors.scss
+// text color variables
+$body-color: $neutral-text-body;
+$headings-color: $neutral-text-title;
+
+// text colors mainly used with subtle backgrounds
+$primary-text-emphasis: $purple-600;
+$secondary-text-emphasis: $orange-600;
+$success-text-emphasis: $green-600;
+$info-text-emphasis: $gray-700;
+$warning-text-emphasis: $yellow-700;
+$danger-text-emphasis: $red-700;
+
+// font-variables
+$font-family-base: 'Mulish', sans-serif;
+$headings-font-family: 'Inter', sans-serif;
+$display-font-family: 'Inter', sans-serif;
+$font-weight-medium: 600;
+$font-weight-semibold: 700;
+$font-weight-bold: 800;
+$headings-font-weight: 800;
+$display-font-weight: 800;
+
+// button-variables
+$btn-font-weight: 600;
+$btn-padding-x: 1.5rem;
+$btn-padding-y: 0.625rem;
+
+$btn-padding-x-lg: 1.75rem;
+$btn-padding-y-lg: 0.875rem;
+
+$btn-padding-x-sm: 1rem;
+$btn-padding-y-sm: 0.375rem;
+
+// dropdown-variables
+$dropdown-header-color: $neutral-text-body;
+$dropdown-link-hover-bg: $neutral-surface-subtle;
+
+// optional styles...
+$enable-caret: false;
+$enable-cssgrid: true;
+$enable-negative-margins: false;
+
+// alert-variables
+$alert-border-radius: 0.5rem;
+$primary-bg-subtle: $primary-surface-subtle;
+$secondary-bg-subtle: $secondary-surface-subtle;
+$info-bg-subtle: $info-surface-subtle;
+$warning-bg-subtle: $yellow-50;
+$danger-bg-subtle: $red-50;
+$success-bg-subtle: $success-surface-subtle;
+
+// input-variables
+$input-btn-font-size-lg: 1rem;
+$border-color: $neutral-border;
+$form-switch-color: $white;
+
+// modals
+$modal-content-border-radius: 1.5rem;
+
+// popover
+$popover-header-bg: $neutral-surface-light;
+
+// validation
+$enable-validation-icons: false;
+$form-feedback-invalid-color: $danger-text-emphasis;

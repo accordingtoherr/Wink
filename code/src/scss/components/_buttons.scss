@@ -1,0 +1,177 @@
+/* buttons.scss */
+
+// BUTTON EXAMPLES:
+
+// COLORS:
+// PRIMARY: <button class="btn wk-btn-theme">Primary Filled</button>
+// FILLED: <button class="btn wk-btn-theme">Primary Filled</button>
+// OUTLINE: <button class="btn wk-btn-outline-theme">Primary Outline</button>
+// LIGHT: <button class="btn wk-btn-light-theme">Primary Light</button>
+// LINK: <button class="btn wk-btn-text-theme">Primary Link</button>
+
+// SIZES:
+// REGULAR: <button class="btn wk-btn-theme">Primary Filled</button>
+// LARGE: <button class="btn btn-lg wk-btn-theme">Primary Filled Large</button>
+// SMALL: <button class="btn btn-sm wk-btn-theme">Primary Filled Small</button>
+
+/*
+ICON ONLY BUTTONS:
+REGULAR: <button class="btn wk-btn-theme wk-btn-icon"><span class="material-symbols-rounded">star</span></button>
+LARGE: <button class="btn wk-btn-theme wk-btn-icon-lg"><span class="material-symbols-rounded">star</span></button>
+SMALL: <button class="btn wk-btn-theme wk-btn-icon-sm"><span class="material-symbols-rounded">star</span></button>
+
+BUTTONS WITH ICONS:
+ICON START: <button class="btn wk-btn-theme wk-btn-icon-start"><span class="material-symbols-rounded">star</span> Icon Start</button>
+ICON END: <button class="btn wk-btn-theme wk-btn-icon-end">Icon End <span class="material-symbols-rounded">star</span></button>
+ICON START & END: <button class="btn wk-btn-theme wk-btn-icon-start wk-btn-icon-end"><span class="material-symbols-rounded">star</span> Icon Start & End <span class="material-symbols-rounded">star</span></button>
+*/
+
+@use '../base/colors' as *;
+
+@mixin btn(
+	$color,
+	$bg,
+	$border-color,
+	$hover-color,
+	$hover-bg,
+	$hover-border-color,
+	$focus-rgb-val,
+	$disabled-color,
+	$disabled-bg,
+	$disabled-border
+) {
+	--bs-btn-color: #{$color};
+	--bs-btn-bg: #{$bg};
+	--bs-btn-border-color: #{$border-color};
+	--bs-btn-hover-color: #{$hover-color};
+	--bs-btn-hover-bg: #{$hover-bg};
+	--bs-btn-hover-border-color: #{$hover-border-color};
+	--bs-btn-focus-color: #{$hover-color};
+	--bs-btn-focus-bg: #{$hover-bg};
+	--bs-btn-focus-border-color: #{$hover-border-color};
+	--bs-btn-active-color: var(--bs-btn-hover-color);
+	--bs-btn-active-bg: var(--bs-btn-hover-bg);
+	--bs-btn-active-border-color: var(--bs-btn-hover-border-color);
+	--bs-btn-disabled-color: #{$disabled-color};
+	--bs-btn-disabled-bg: #{$disabled-bg};
+	--bs-btn-disabled-border-color: #{$disabled-border};
+	--bs-btn-border-radius: 50rem;
+	--bs-btn-disabled-opacity: 1;
+	--bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(#{$focus-rgb-val}), 0.3);
+
+	&:disabled {
+		pointer-events: auto;
+		cursor: not-allowed;
+	}
+}
+
+$variant-styles: (
+	theme: (
+		color: var(--neutral-text-negative),
+		bg: var(--theme-surface-main),
+		border-color: var(--theme-border-main),
+		hover-color: var(--neutral-text-negative),
+		hover-bg: var(--theme-surface-darker),
+		hover-border-color: var(--theme-surface-darker),
+		focus-rgb-val: --theme-main-rgb,
+		disabled-color: var(--neutral-text-negative),
+		disabled-bg: rgba(var(--theme-main-rgb), 0.65),
+		disabled-border: rgba(var(--theme-main-rgb), 0)
+	),
+	outline-theme: (
+		color: var(--theme-text-emphasis),
+		bg: $neutral-surface-alpha,
+		border-color: var(--theme-border-main),
+		hover-color: var(--neutral-text-negative),
+		hover-bg: var(--theme-surface-main),
+		hover-border-color: var(--theme-border-darker),
+		focus-rgb-val: --theme-main-rgb,
+		disabled-color: rgba(var(--theme-main-rgb), 0.65),
+		disabled-bg: $neutral-surface-alpha,
+		disabled-border: rgba(var(--theme-main-rgb), 0.65)
+	),
+	light-theme: (
+		color: var(--theme-text-emphasis),
+		bg: var(--theme-surface-subtle),
+		border-color: var(--theme-border-subtle),
+		hover-color: var(--theme-text-emphasis-dark),
+		hover-bg: var(--theme-surface-light),
+		hover-border-color: var(--theme-border-light),
+		focus-rgb-val: --theme-main-rgb,
+		disabled-color: rgba(var(--theme-main-rgb), 0.65),
+		disabled-bg: rgba(var(--theme-main-rgb), 0.02),
+		disabled-border: rgba(var(--theme-main-rgb), 0.05)
+	),
+	text-theme: (
+		color: var(--theme-text-emphasis),
+		bg: transparent,
+		border-color: transparent,
+		hover-color: var(--theme-text-emphasis-dark),
+		hover-bg: var(--theme-surface-light),
+		hover-border-color: var(--theme-surface-light),
+		focus-rgb-val: --theme-main-rgb,
+		disabled-color: rgba(var(--theme-main-rgb), 0.65),
+		disabled-bg: transparent,
+		disabled-border: transparent
+	)
+);
+
+@each $variant, $styles in $variant-styles {
+	.wk-btn-#{$variant} {
+		@include btn($styles...);
+	}
+}
+
+// for Material Symbols Icons
+// decrease left padding if icon start
+.btn.wk-btn-icon-start {
+	padding-left: calc(var(--bs-btn-padding-x) - 0.5rem);
+}
+
+// decrease right padding if icon end
+.btn.wk-btn-icon-end {
+	padding-right: calc(var(--bs-btn-padding-x) - 0.5rem);
+}
+
+@mixin btn-icon($width, $height, $font-size) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	height: $height;
+	padding: 0;
+	width: $width;
+
+	.material-symbols-rounded,
+	.material-symbols-rounded-filled {
+		font-size: $font-size;
+	}
+}
+
+.btn.wk-btn-icon {
+	@include btn-icon(2.5rem, 2.5rem, 1.25rem);
+}
+
+.btn.wk-btn-icon-sm {
+	@include btn-icon(2rem, 2rem, 1rem);
+}
+
+.btn.wk-btn-icon-lg {
+	@include btn-icon(3rem, 3rem, 1.5rem);
+}
+
+.btn.btn-sm {
+	.material-symbols-rounded,
+	.material-symbols-rounded-filled {
+		font-size: 1.25rem;
+	}
+}
+
+.btn.btn-lg {
+	gap: 0.5rem;
+
+	.material-symbols-rounded,
+	.material-symbols-rounded-filled {
+		font-size: 1.5rem;
+	}
+}
