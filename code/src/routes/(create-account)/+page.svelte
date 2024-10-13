@@ -48,9 +48,11 @@ console.log('va', values)
 										<Label for="accountType" class="form-Label fw-bold mb-2"
 											>Choose Account Type</Label
 										>
+										<div>{checked}</div>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
 											   bind:selected
+											   bind:checked
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
@@ -184,7 +186,7 @@ console.log('va', values)
 								<Label for="existingCompany" class="form-Label fw-bold mb-2"
 								>*Select Existing Company</Label
 							>
-							<Dropdown bind:selectedItemDropdown/>
+							<!-- <Dropdown bind:selectedItemDropdown/> -->
 								{/if}
 							</div>
 						</AccordionItem>

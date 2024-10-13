@@ -21,7 +21,7 @@
 	class:wk-theme-shadow-glow={checked}
 >
 	<div class="form-check">
-		<input {id} {name} {value} {disabled}bind:group={selected} type="radio" class="form-check-input me-1" />
+		<input {id} {name} {value} {checked} {disabled}bind:group={selected} type="radio" class="form-check-input me-1" />
 		<span class="form-check-label"><slot /></span>
 	</div>
 </label>
