@@ -11,7 +11,7 @@
 
 </script>
 
-<select {value} on:change={selectedItem} aria-expanded="false" class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer">
+<select bind:value={value} on:change={selectedItem} aria-expanded="false" class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer">
 
 	<option value=""></option>
 	{#each data as d}
