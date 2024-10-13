@@ -2,17 +2,18 @@
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
 	import { Accordion, AccordionItem, Input, Label,
-		DropdownToggle,     DropdownItem,
-		DropdownMenu, } from '@sveltestrap/sveltestrap';
+} from '@sveltestrap/sveltestrap';
 	// import { regSchema } from '../../schema';
 	import Dropdown from '$lib/app/component/Dropdown.svelte'
-	import data from ".././../../src/lib/app/server/data.json";
+
 
 	let checked: boolean = false;
 	let selected: boolean | string | undefined
+	let selectedItemDropdown: string | undefined;
 
 	let values = {};
 
+	//TO DO// 1. fix the binding boolean on radio,  2. update the arrow to bootstrap one for 3. form submit to route  4. bonus section colors, 5. validation
 const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
 };
@@ -34,7 +35,9 @@ console.log('va', values)
 				<p class="subtitle">
 					Create new member account or add member to existing corporate accounts.
 				</p>
-				<form class="vstack wk-gap-4 wk-gap-lg-8" on:submit|preventDefault={submitHandler}>
+				<form class="vstack wk-gap-4 wk-gap-lg-8"   method="POST"
+				on:submit|preventDefault
+				action="/member-account">
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
@@ -181,11 +184,7 @@ console.log('va', values)
 								<Label for="existingCompany" class="form-Label fw-bold mb-2"
 								>*Select Existing Company</Label
 							>
-							<Dropdown
-							id="accountTypeAppService"
-							bind:selected
-							/>
-									
+							<Dropdown bind:selectedItemDropdown/>
 								{/if}
 							</div>
 						</AccordionItem>
@@ -257,36 +256,6 @@ console.log('va', values)
 									</div>
 								</div>
 							</div>
-						</AccordionItem>
-					</Accordion>
-	<!-- Subscription/Billing -->
-					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
-						<AccordionItem active header="Subscription/Billing">
-							<SubscriptionTypes 
-							name="AnnuitySpecs"
-							value="existing"
-							bind:selected
-							/>
-							<SubscriptionTypes 
-							name="LifeSpecs"
-							value="existing"
-							bind:selected
-							/>
-			
-								{#if selected !== 'agent' }
-								<SubscriptionTypes 
-								name="Sales & Market Report"
-								value="existing"
-								bind:selected
-								/>
-								<SubscriptionTypes 
-								name="Index Intelligence Report"
-								value="existing"
-								bind:selected
-								/>
-				
-			 
-							{/if}
 						</AccordionItem>
 					</Accordion>	
 					<!-- Subscription/Billing -->
