@@ -25,4 +25,23 @@ select:hover {
 	cursor: pointer;
 }
 
+select {
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("../imgs/chevron-down-outline.png");
+  background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-y: 15px;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  margin-right: 2rem;
+  padding: 1rem;
+  padding-right: 2rem;
+
+}
+
+
+
 </style>

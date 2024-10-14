@@ -1,14 +1,16 @@
 <script lang="ts">
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
-	import { Accordion, AccordionItem, Input, Label,
+	import { Accordion, AccordionItem, Input, Label
 } from '@sveltestrap/sveltestrap';
+	import data from "../../lib/app/server/data.json"
 	// import { regSchema } from '../../schema';
-	import Dropdown from '$lib/app/component/Dropdown.svelte'
+	 import Dropdown from '$lib/app/component/Dropdown.svelte'
 
 
 	let checked: boolean = false;
-	let selected: boolean | string | undefined
+	let selected:  string | undefined
+	console.log('s', selected)
 	let selectedItemDropdown: string | undefined;
 
 	let values = {};
@@ -48,7 +50,6 @@ console.log('va', values)
 										<Label for="accountType" class="form-Label fw-bold mb-2"
 											>Choose Account Type</Label
 										>
-										<div>{checked}</div>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
 											   bind:selected
@@ -61,6 +62,7 @@ console.log('va', values)
 											<BoxedRadio bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
+
 											<BoxedRadio
 											bind:selected
 												id="accountTypeAppService"
@@ -83,6 +85,7 @@ console.log('va', values)
 												value="new company"
 												flexGrow>New Company</BoxedRadio
 											>
+
 											<BoxedRadio
 												id="accountCreateExisting"
 												name="accountCreateType"
@@ -183,10 +186,10 @@ console.log('va', values)
 								</div>
 								{/if}
 								{#if selected === 'existing'}
-								<Label for="existingCompany" class="form-Label fw-bold mb-2"
+								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 								>*Select Existing Company</Label
 							>
-							<!-- <Dropdown bind:selectedItemDropdown/> -->
+							<Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown}/> 
 								{/if}
 							</div>
 						</AccordionItem>
@@ -316,4 +319,8 @@ console.log('va', values)
 		color: var(--neutral-text-title) !important;
 		font-family: var(--bs-body-font-family);
 	}
+
+	label.dropdown {
+    padding-left: 0;
+}
 </style>
