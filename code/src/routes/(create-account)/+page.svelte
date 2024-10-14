@@ -59,9 +59,10 @@ console.log('va', values)
 				<p class="subtitle">
 					Create new member account or add member to existing corporate accounts.
 				</p>
-				<form class="vstack wk-gap-4 wk-gap-lg-8"   method="POST"
-				on:submit|preventDefault
-				action="/member-account">
+				<form
+				class="vstack wk-gap-4 wk-gap-lg-8"
+				action="/member"
+				method="POST">
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
@@ -73,7 +74,7 @@ console.log('va', values)
 											>Choose Account Type</Label
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
-											<BoxedRadio
+											<!-- <BoxedRadio
 												bind:selected
 												id="accountTypeCorporate"
 												name="accountType"
@@ -116,7 +117,7 @@ console.log('va', values)
 											>
 										</div>
 										{/if}
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</AccordionItem>
@@ -257,7 +258,6 @@ console.log('va', values)
 												type="text"
 												name="memberEmail"
 												class="form-control"
-												required
 												bind:value={formValues.memberData.memberEmail}
 											/>
 										</div>
