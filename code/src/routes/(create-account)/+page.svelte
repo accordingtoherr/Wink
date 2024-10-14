@@ -61,8 +61,7 @@ console.log('va', values)
 				</p>
 				<form
 				class="vstack wk-gap-4 wk-gap-lg-8"
-				action="/member"
-				method="POST">
+				action="/member">
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
