@@ -73,7 +73,7 @@ console.log('va', values)
 											>Choose Account Type</Label
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
-											<!-- <BoxedRadio
+										 <BoxedRadio 
 												bind:selected
 												id="accountTypeCorporate"
 												name="accountType"
@@ -116,7 +116,7 @@ console.log('va', values)
 											>
 										</div>
 										{/if}
-									</div> -->
+									</div> 
 								</div>
 							</div>
 						</AccordionItem>
