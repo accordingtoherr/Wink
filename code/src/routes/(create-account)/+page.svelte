@@ -10,12 +10,34 @@
 
 	let checked: boolean = false;
 	let selected:  string | undefined
-	console.log('s', selected)
+
 	let selectedItemDropdown: string | undefined;
 
 	let values = {};
 
-	//TO DO// 1. fix the binding boolean on radio,  2. update the arrow to bootstrap one for 3. form submit to route  4. bonus section colors, 5. validation
+	let formValues= {
+		existingCompany: '',
+		accountType:'',
+		memberData:{
+			memberFirstName:'',
+			memberLastName: '',
+			memberEmail: '',
+			memberJob:'',
+			memberPhone: '',
+			memberPhoneExt: ''
+		},
+	companyData:{
+		companyName: '',
+		companyPhoneNumber: '',
+		companyWebsiteUrl:'',
+		companyStreetAddress:'',
+		companySuite:'',
+		companyCity:'',
+		companyState:'',
+		companyZip: ''
+	}
+	}
+	//TO DO// 1. fix the binding boolean on radio, 3. form submit to route  4. bonus section colors, 5. validation
 const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
 };
@@ -52,8 +74,7 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-											{checked}
-											{selected}
+												bind:selected
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
@@ -64,8 +85,7 @@ console.log('va', values)
 											>
 
 											<BoxedRadio
-											{checked}
-											{selected}
+											bind:selected
 												id="accountTypeAppService"
 												name="accountType"
 												value="application service"
@@ -80,8 +100,7 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-											{checked}
-											{selected}
+											bind:selected
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
@@ -92,8 +111,7 @@ console.log('va', values)
 												id="accountCreateExisting"
 												name="accountCreateType"
 												value="existing"
-												{checked}
-												{selected}
+												bind:selected
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
@@ -112,7 +130,7 @@ console.log('va', values)
 								<div id="companyInformationCollapse" class="col-12 col-xl-9">
 									<div class="wk-pb-4">
 										<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
-										<Input id="companyName" type="text" name="companyName" class="form-control" />
+										<Input bind:value={formValues.companyData.companyName} id="companyName" type="text" name="companyName" class="form-control" />
 									</div>
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6">
@@ -124,6 +142,7 @@ console.log('va', values)
 												type="tel"
 												name="companyPhoneNumber"
 												class="form-control"
+												bind:value={formValues.companyData.companyPhoneNumber}
 											/>
 										</div>
 										<div class="col-12 col-md-6">
@@ -135,6 +154,7 @@ console.log('va', values)
 												type="url"
 												name="companyWebsiteUrl"
 												class="form-control"
+												bind:value={formValues.companyData.companyWebsiteUrl}
 											/>
 										</div>
 									</div>
@@ -148,6 +168,7 @@ console.log('va', values)
 												type="text"
 												name="companyStreetAddress"
 												class="form-control"
+												bind:value={formValues.companyData.companyStreetAddress}
 											/>
 										</div>
 										<div class="wk-pb-4">
@@ -159,6 +180,7 @@ console.log('va', values)
 												type="text"
 												name="companySuite"
 												class="form-control"
+												bind:value={formValues.companyData.companySuite}
 											/>
 										</div>
 
@@ -170,11 +192,12 @@ console.log('va', values)
 													type="text"
 													name="companyCity"
 													class="form-control"
+													bind:value={formValues.companyData.companyCity}
 												/>
 											</div>
 											<div class="col-8 col-md-2 wk-pb-4 wk-pb-md-0">
 												<Label for="companyState" class="form-Label fw-bold mb-2">State</Label>
-												<Input type="select">
+												<Input bind:value={formValues.companyData.companyState} type="select">
 													{#each ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'] as option}
 														<option>{option}</option>
 													{/each}
@@ -182,7 +205,7 @@ console.log('va', values)
 											</div>
 											<div class="col-8 col-md-4 wk-pb-md-0">
 												<Label for="companyZip" class="form-Label fw-bold mb-2">Zip Code</Label>
-												<Input id="companyZip" type="text" name="companyZip" class="form-control" />
+												<Input bind:value={formValues.companyData.companyZip} id="companyZip" type="text" name="companyZip" class="form-control" />
 											</div>
 										</div>
 									</div>
@@ -192,7 +215,7 @@ console.log('va', values)
 								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 								>*Select Existing Company</Label
 							>
-							<Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown}/> 
+							<Dropdown {selectedItemDropdown} bind:value={formValues.existingCompany}/> 
 								{/if}
 							</div>
 						</AccordionItem>
@@ -212,6 +235,7 @@ console.log('va', values)
 												type="text"
 												name="memberFirstName"
 												class="form-control"
+												bind:value={formValues.memberData.memberFirstName}
 											/>
 										</div>
 										<div class="col-12 col-md-6">
@@ -221,6 +245,7 @@ console.log('va', values)
 												type="text"
 												name="memberLastName"
 												class="form-control"
+												bind:value={formValues.memberData.memberLastName}
 											/>
 										</div>
 									</div>
@@ -233,11 +258,12 @@ console.log('va', values)
 												name="memberEmail"
 												class="form-control"
 												required
+												bind:value={formValues.memberData.memberEmail}
 											/>
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
-											<Input id="jobTitle" type="text" name="jobTitle" class="form-control" />
+											<Input 	bind:value={formValues.memberData.memberJob} id="jobTitle" type="text" name="jobTitle" class="form-control" />
 										</div>
 									</div>
 									<div class="row">
@@ -250,6 +276,7 @@ console.log('va', values)
 												type="tel"
 												name="memberPhoneNumber"
 												class="form-control"
+												bind:value={formValues.memberData.memberPhone}
 											/>
 										</div>
 										<div class="col-8 col-md-3">
@@ -259,6 +286,7 @@ console.log('va', values)
 												type="text"
 												name="memberPhoneExt"
 												class="form-control"
+												bind:value={formValues.memberData.memberPhoneExt}
 											/>
 										</div>
 									</div>
