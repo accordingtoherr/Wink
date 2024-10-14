@@ -228,7 +228,7 @@ console.log('va', values)
 								<div class="col-12 col-xl-9">
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
-											<Label for="memberFirstName" class="form-Label fw-bold mb-2">First Name</Label
+											<Label for="memberFirstName" class="form-Label fw-bold mb-2">*First Name</Label
 											>
 											<Input
 												id="memberFirstName"
@@ -239,7 +239,7 @@ console.log('va', values)
 											/>
 										</div>
 										<div class="col-12 col-md-6">
-											<Label for="memberLastName" class="form-Label fw-bold mb-2">Last Name</Label>
+											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
 											<Input
 												id="memberLastName"
 												type="text"
@@ -251,7 +251,7 @@ console.log('va', values)
 									</div>
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
-											<Label for="memberEmail" class="form-Label fw-bold mb-2">Email</Label>
+											<Label for="memberEmail" class="form-Label fw-bold mb-2">*Email</Label>
 											<Input
 												id="memberEmail"
 												type="text"
