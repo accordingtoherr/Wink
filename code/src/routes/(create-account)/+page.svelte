@@ -37,7 +37,7 @@
 		companyZip: ''
 	}
 	}
-	//TO DO// 1. fix the binding boolean on radio, 3. form submit to route  4. bonus section colors, 5. validation
+	//TO DO// 1. fix the binding boolean on radio, 2. form submit to new route, display data  3. bonus section colors, 4 validation
 const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
 };
