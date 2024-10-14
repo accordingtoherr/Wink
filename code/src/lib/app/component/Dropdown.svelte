@@ -11,8 +11,7 @@
 
 </script>
 
-<select bind:value={value} on:change={selectedItem} aria-expanded="false" class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer">
-
+<select bind:value={value} on:change={selectedItem} aria-expanded="false" class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer closed">
 	<option value=""></option>
 	{#each data as d}
 		<option>
@@ -20,13 +19,9 @@
 		</option>
 	{/each}
 </select>
-<style>
-select:hover {
-	cursor: pointer;
-}
+<style lang="scss">
 
 select {
-
   -webkit-appearance: none;
   -moz-appearance: none;
   background: transparent;
@@ -39,8 +34,10 @@ select {
   margin-right: 2rem;
   padding: 1rem;
   padding-right: 2rem;
-
-}
+  
+  :hover {
+	cursor: pointer;
+}}
 
 
 

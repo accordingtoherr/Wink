@@ -52,8 +52,8 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-											   bind:selected
-											   bind:checked
+											{checked}
+											{selected}
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
@@ -64,7 +64,8 @@ console.log('va', values)
 											>
 
 											<BoxedRadio
-											bind:selected
+											{checked}
+											{selected}
 												id="accountTypeAppService"
 												name="accountType"
 												value="application service"
@@ -79,7 +80,8 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-											bind:selected
+											{checked}
+											{selected}
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
@@ -90,7 +92,8 @@ console.log('va', values)
 												id="accountCreateExisting"
 												name="accountCreateType"
 												value="existing"
-												bind:selected
+												{checked}
+												{selected}
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
