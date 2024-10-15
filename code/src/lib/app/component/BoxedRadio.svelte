@@ -24,7 +24,7 @@
 
 >
 	<div class="form-check" >
-		<input required id={selected} {name} {value}{disabled} bind:group={selected} on:click={() => selectOption(value, id)} type="radio" class="form-check-input me-1 " />
+		<input required {checked} {name} {value}{disabled} bind:group={selected} on:click={() => selectOption(value, id)} type="radio" class="form-check-input me-1 " />
 		<span class="form-check-label"><slot /></span>
 	</div>
 </label>
