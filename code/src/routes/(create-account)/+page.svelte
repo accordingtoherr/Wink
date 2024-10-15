@@ -42,7 +42,6 @@ const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
 };
 
-console.log('va', values)
 // const result = regSchema.validate(values);
 
 
@@ -74,20 +73,26 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 										 <BoxedRadio 
-												bind:selected
+										
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
+												bind:checked
+												selected={selected}
 												flexGrow>Corporate</BoxedRadio
 											>
-											<BoxedRadio bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
+											<BoxedRadio 
+											bind:checked
+											selected={selected} id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
 											<BoxedRadio
-											bind:selected
+										
 												id="accountTypeAppService"
 												name="accountType"
+												bind:checked
+												selected={selected}
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
@@ -100,10 +105,12 @@ console.log('va', values)
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-											bind:selected
+									
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
+												bind:checked
+												selected={selected}
 												flexGrow>New Company</BoxedRadio
 											>
 
@@ -111,7 +118,9 @@ console.log('va', values)
 												id="accountCreateExisting"
 												name="accountCreateType"
 												value="existing"
-												bind:selected
+												bind:checked
+												selected={selected}
+
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
@@ -323,6 +332,8 @@ console.log('va', values)
 							{/if}
 						</AccordionItem>
 					</Accordion>	
+					<div>{formValues.memberData.memberFirstName}</div>
+					<div>{JSON.stringify(formValues)}</div>
 					<div>
 						<button id="submitCreateAccountBtn" type="submit" class="btn btn-lg wk-btn-theme"
 							>Submit</button

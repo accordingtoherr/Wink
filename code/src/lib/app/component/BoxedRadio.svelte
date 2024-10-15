@@ -8,8 +8,8 @@
 	export let flexGrow: boolean = false;
 	export let selected: string | undefined
 
-	$: checked = group !== undefined ? group === value : checked;
 
+	$: checked = group !== undefined ? group === value : checked;
 	$: selected = '';
 
 </script>
@@ -18,12 +18,11 @@
 	for={id}
 	class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer"
 	class:flex-grow-1={flexGrow}
-	class:wk-theme-border-main={checked}
-	class:wk-theme-shadow-glow={checked}
+	class:wk-theme-border-main={selected}
+	class:wk-theme-shadow-glow={selected}
 >
-
 	<div class="form-check">
-		<input required {checked} {id} {name} {value}{disabled} bind:group={selected} type="radio" class="form-check-input me-1" />
+		<input required {id} {name} {value}{disabled} bind:group={selected} type="radio" class="form-check-input me-1 " />
 		<span class="form-check-label"><slot /></span>
 	</div>
 </label>
