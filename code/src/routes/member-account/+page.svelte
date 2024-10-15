@@ -1,12 +1,23 @@
 
 <script>
-	let formData =  {};
-	let response= ''
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores'; // Import the page store
+
+  let firstName = '';
+  let lastName = '';
+  let email = '';
+
+  // onMount to extract query parameters when the page loads
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    firstName = params.get('firstName') || '';
+    lastName = params.get('lastName') || '';
+    email = params.get('email') || '';
+  });
 
 </script>
 
-<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
-<h1>Member Information</h1>
-<div>{response}</div>
- </div>   
-
+<h1>Member Account</h1>
+<p><strong>First Name:</strong> {firstName}</p>
+<p><strong>Last Name:</strong> {lastName}</p>
+<p><strong>Email:</strong> {email}</p>
