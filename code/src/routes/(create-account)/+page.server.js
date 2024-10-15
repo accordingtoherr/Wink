@@ -1,8 +1,15 @@
 export const actions = {
-    default: async ({ request: any }) => {
-      const formData = await request.formData();
-      const email = formData.post('email');
-      // Process the form data and perform actions
-      return { success: true };
-    },
-  };
+	// @ts-ignore
+	create: async ({ cookies, request }) => {
+		const data = await request.formData();
+		// @ts-ignore
+		db.createTodo(cookies.get('userid'), data.get('description'));
+	},
+
+	// @ts-ignore
+	delete: async ({ cookies, request }) => {
+		const data = await request.formData();
+		// @ts-ignore
+		db.deleteTodo(cookies.get('userid'), data.get('id'));
+	}
+};

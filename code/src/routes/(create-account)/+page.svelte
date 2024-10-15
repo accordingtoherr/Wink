@@ -6,6 +6,7 @@
 	import data from "../../lib/app/server/data.json"
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
+	import { enhance } from '$app/forms';
 	 export let form;
 
 	let checked: boolean = false;
@@ -59,8 +60,9 @@ const submitHandler = () => {
 					Create new member account or add member to existing corporate accounts.
 				</p>
 				<form
-				class="vstack wk-gap-4 wk-gap-lg-8"
-				action="member">
+				 method="POST" action="/member" 
+				class="vstack wk-gap-4 wk-gap-lg-8">
+				
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
