@@ -7,10 +7,11 @@
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
 	import { enhance } from '$app/forms';
+	import { createEventDispatcher } from 'svelte';
 	 export let form;
 
 	let checked: boolean = false;
-	let selected:  string | undefined
+	let selected: string | boolean | undefined
 
 	let selectedItemDropdown: string | undefined;
 
@@ -38,6 +39,17 @@
 		companyZip: ''
 	}
 	}
+
+	import type { Actions } from './$types';
+import { error } from '@sveltejs/kit';
+
+export const actions: Actions = {
+	contact: async ({ cookies, request }) => {
+		const data = await request.formData();
+		console.log(data);
+		console.log(request.formData);
+	}
+} satisfies Actions;
 	//TO DO// 1. fix the binding boolean on radio, 2. form submit to new route, display data  3. bonus section colors, 4 validation
 const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
@@ -60,7 +72,8 @@ const submitHandler = () => {
 					Create new member account or add member to existing corporate accounts.
 				</p>
 				<form
-				 method="POST" action="/member" 
+				 method="POST" 
+				 action="/member" 
 				class="vstack wk-gap-4 wk-gap-lg-8">
 				
 					<!-- account settings -->
@@ -79,13 +92,13 @@ const submitHandler = () => {
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:checked
-												selected={selected}
+												bind:selected
+											
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
 											bind:checked
-											selected={selected} id="accountTypeAgent" name="accountType" value="agent" flexGrow
+											bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
@@ -93,8 +106,7 @@ const submitHandler = () => {
 										
 												id="accountTypeAppService"
 												name="accountType"
-												bind:checked
-												selected={selected}
+												bind:selected
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
@@ -111,8 +123,7 @@ const submitHandler = () => {
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
-												bind:checked
-												selected={selected}
+												bind:selected
 												flexGrow>New Company</BoxedRadio
 											>
 
@@ -120,8 +131,7 @@ const submitHandler = () => {
 												id="accountCreateExisting"
 												name="accountCreateType"
 												value="existing"
-												bind:checked
-												selected={selected}
+												bind:selected
 
 												flexGrow>Existing Company</BoxedRadio
 											>
