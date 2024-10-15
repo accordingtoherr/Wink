@@ -6,7 +6,7 @@
 	export let group: string | number | undefined = undefined;
 	export let checked: boolean = false;
 	export let flexGrow: boolean = false;
-	export let selected:string | undefined
+	export let selected: string | boolean | undefined
 
 	$: checked = group !== undefined ? group === value : checked;
 	$: selected = '';

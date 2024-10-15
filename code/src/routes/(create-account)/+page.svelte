@@ -8,6 +8,7 @@
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
 	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
+	import { goto } from '$app/navigation'; // Import `goto` for navigation if needed
 	 export let form;
 
 	let checked: boolean = false;
@@ -40,16 +41,69 @@
 	}
 	}
 
-	import type { Actions } from './$types';
-import { error } from '@sveltejs/kit';
 
-export const actions: Actions = {
-	contact: async ({ cookies, request }) => {
-		const data = await request.formData();
-		console.log(data);
-		console.log(request.formData);
-	}
-} satisfies Actions;
+	let memberFirstName = '';
+  let memberLastName = '';
+  let memberEmail = '';
+  let errors = {
+    firstName: '',
+    lastName: '',
+    email: '',
+  };
+  let isSubmitting = false;
+
+
+  const handleSubmit = async () => {
+    const formData = new URLSearchParams({
+      memberFirstName:''
+    });
+
+
+	 // Validate function
+	 const validateForm = () => {
+    let isValid = true;
+    // Clear previous errors
+    errors = { firstName: '', lastName: '', email: '' };
+
+    if (!memberFirstName) {
+      errors.firstName = 'First Name is required.';
+      isValid = false;
+    }
+    if (!memberLastName) {
+      errors.lastName = 'Last Name is required.';
+      isValid = false;
+    }
+    if (!memberEmail) {
+      errors.email = 'Email is required.';
+      isValid = false;
+    } else if (!validateEmail(memberEmail)) {
+      errors.email = 'Email must be a valid email address.';
+      isValid = false;
+    }
+
+    return isValid;
+  };
+	//email validation//
+	const validateEmail = (email: string) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+    // Send the form data to the `/member-account` route via POST
+    const response = await fetch('/member-account', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // Set the content type to form-encoded
+      body: formData.toString(), // Convert the form data to a string
+    });
+
+    if (response.ok) {
+      // Optionally handle the response if needed
+      const result = await response.json();
+      console.log('Form submitted:', result);
+      // Navigate to the member account page if necessary
+      goto('/member-account');
+    }
+  };
 	//TO DO// 1. fix the binding boolean on radio, 2. form submit to new route, display data  3. bonus section colors, 4 validation
 const submitHandler = () => {
   alert(JSON.stringify(values, null, 2));
@@ -73,7 +127,8 @@ const submitHandler = () => {
 				</p>
 				<form
 				 method="POST" 
-				 action="/member" 
+				 on:submit|preventDefault={handleSubmit}
+				 action="/member-account" 
 				class="vstack wk-gap-4 wk-gap-lg-8">
 				
 					<!-- account settings -->
@@ -254,20 +309,28 @@ const submitHandler = () => {
 											<Input
 												id="memberFirstName"
 												type="text"
+												required
 												name="memberFirstName"
 												class="form-control"
-												bind:value={formValues.memberData.memberFirstName}
+												bind:value={memberFirstName}
 											/>
+											{#if errors.firstName}
+											<p class="error">{errors.firstName}oopss</p>
+										  {/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
 											<Input
 												id="memberLastName"
 												type="text"
+												required
 												name="memberLastName"
 												class="form-control"
 												bind:value={formValues.memberData.memberLastName}
 											/>
+											{#if errors.lastName}
+											<p class="error">{errors.lastName}oopss</p>
+										  {/if}
 										</div>
 									</div>
 									<div class="row wk-pb-4">
@@ -276,10 +339,14 @@ const submitHandler = () => {
 											<Input
 												id="memberEmail"
 												type="text"
+												required
 												name="memberEmail"
 												class="form-control"
 												bind:value={formValues.memberData.memberEmail}
 											/>
+											{#if errors.email}
+											<p class="error">{errors.email}</p>
+										  {/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
@@ -347,7 +414,7 @@ const submitHandler = () => {
 					<div>{formValues.memberData.memberFirstName}</div>
 					<div>{JSON.stringify(formValues)}</div>
 					<div>
-						<button id="submitCreateAccountBtn" type="submit" class="btn btn-lg wk-btn-theme"
+						<button id="submitCreateAccountBtn"  disabled={isSubmitting} type="submit" class="btn btn-lg wk-btn-theme"
 							>Submit</button
 						>
 					</div>

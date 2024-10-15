@@ -8,7 +8,7 @@
 	export let checked: boolean = false;
 
 	//made a new var since checked needs to be boolean and i need
-	export let selected: boolean | string | undefined
+	export let selected:string | boolean | undefined
 
 	$: checked = group !== undefined ? group === value : checked;
 
