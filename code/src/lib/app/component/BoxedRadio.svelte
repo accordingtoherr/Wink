@@ -11,7 +11,7 @@
 
 	$: checked = group !== undefined ? group === value : checked;
 	$: selected = '';
-	$: companyType= 'new company';
+	$: companyType= 'new';
 
 
 	const selectOption = (value: string, id: string) => {

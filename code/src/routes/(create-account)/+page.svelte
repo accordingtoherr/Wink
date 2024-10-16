@@ -1,4 +1,8 @@
+
 <script lang="ts">
+	
+
+//TO DO 1 display data  3. bonus section colors, 4 validation//
 	import { goto } from '$app/navigation'; // Import goto for navigation
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
@@ -7,8 +11,6 @@
 	import data from "../../lib/app/server/data.json"
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
-	import { enhance } from '$app/forms';
-	import { createEventDispatcher } from 'svelte';
 	let firstName = '';
 	let lastName = '';
 	let email = '';
@@ -20,9 +22,8 @@
 	let checked: boolean = false;
 	let companyType: string |  undefined
 	let selected: string | boolean | undefined
-
 	let selectedItemDropdown: string | undefined;
-  	export let value:  string 
+
 	// Simple validation function
 	const validateForm = () => {
 	  let isValid = true;
@@ -43,23 +44,22 @@
   
 	  return isValid;
 	};
+	let formData = { firstName: '', lastName: '', email: '' };
+
+
+	// const handleSubmit = () => {
+	//   if (!validateForm()) {
+	// 	return; // Stop submission if validation fails
+	//   }
   
-	const handleSubmit = () => {
-	  if (!validateForm()) {
-		return; // Stop submission if validation fails
-	  }
+	//   // Create a data object
+	//   let formData = { firstName: '', lastName: '', email: '' };
   
-	  // Create a data object
-	  const formData = {
-		firstName,
-		lastName,
-		email,
-	  };
-  
-	  // Navigate to the /member-account page and pass the form data
-	  goto(`/member-account?firstName=${encodeURIComponent(formData.firstName)}&lastName=${encodeURIComponent(formData.lastName)}&email=${encodeURIComponent(formData.email)}`);
-	};
+	//   // Navigate to the /member-account page and pass the form data
+	//   goto(`/member`);
+	// };
 	</script>
+
 <main class="container-fluid px-0 overflow-y-auto">
 	<div
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
@@ -72,9 +72,8 @@
 					Create new member account or add member to existing corporate accounts.
 				</p>
 				<form
-				 method="POST" 
-				 on:submit|preventDefault={handleSubmit}
-				 action="/member-account" 
+				 method="post" 
+				  action="?/submit"
 				class="vstack wk-gap-4 wk-gap-lg-8">
 				
 					<!-- account settings -->
@@ -240,7 +239,6 @@
 						
 								{/if}
 							</div>
-							<div>{selected}</div>
 						</AccordionItem>
 					</Accordion>
 					<!-- member information -->
@@ -259,9 +257,9 @@
 												
 												name="memberFirstName"
 												class="form-control"
-												bind:value={firstName}
+												bind:value={formData.firstName}
 											/>
-											
+											{formData.firstName}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
