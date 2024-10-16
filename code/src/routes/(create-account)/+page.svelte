@@ -46,18 +46,6 @@
 	};
 	let formData = { firstName: '', lastName: '', email: '' };
 
-
-	// const handleSubmit = () => {
-	//   if (!validateForm()) {
-	// 	return; // Stop submission if validation fails
-	//   }
-  
-	//   // Create a data object
-	//   let formData = { firstName: '', lastName: '', email: '' };
-  
-	//   // Navigate to the /member-account page and pass the form data
-	//   goto(`/member`);
-	// };
 	</script>
 
 <main class="container-fluid px-0 overflow-y-auto">
@@ -65,6 +53,7 @@
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
 		style="min-height: 100%; height: fit-content;"
 	>
+	{JSON.stringify(formData)}
 		<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 			<div class="d-flex flex-column align-items-start">
 				<h1 class="wk-fs-3xl">Create Account</h1>

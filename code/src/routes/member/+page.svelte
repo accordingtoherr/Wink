@@ -6,6 +6,7 @@
   let firstName = '';
   let lastName = '';
   let email = '';
+  export let data;
 
   // onMount to extract query parameters when the page loads
   onMount(() => {
@@ -17,7 +18,4 @@
 
 </script>
 
-<h1>Member Account</h1>
-<p><strong>First Name:</strong> {firstName}</p>
-<p><strong>Last Name:</strong> {lastName}</p>
-<p><strong>Email:</strong> {email}</p>
+{JSON.stringify(data, null, 2)}
