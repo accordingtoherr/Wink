@@ -1,120 +1,3 @@
-<!-- <script lang="ts">
-	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
-	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
-	import { Accordion, AccordionItem, Input, Label
-} from '@sveltestrap/sveltestrap';
-	import data from "../../lib/app/server/data.json"
-	// import { regSchema } from '../../schema';
-	 import Dropdown from '$lib/app/component/Dropdown.svelte'
-	import { enhance } from '$app/forms';
-	import { createEventDispatcher } from 'svelte';
-	import { goto } from '$app/navigation'; // Import `goto` for navigation if needed
-	 export let form;
-
-	let checked: boolean = false;
-	let selected: string | boolean | undefined
-
-	let selectedItemDropdown: string | undefined;
-
-	let values = {};
-
-	let formValues= {
-		existingCompany: '',
-		accountType:'',
-		memberData:{
-			memberFirstName:'',
-			memberLastName: '',
-			memberEmail: '',
-			memberJob:'',
-			memberPhone: '',
-			memberPhoneExt: ''
-		},
-	companyData:{
-		companyName: '',
-		companyPhoneNumber: '',
-		companyWebsiteUrl:'',
-		companyStreetAddress:'',
-		companySuite:'',
-		companyCity:'',
-		companyState:'',
-		companyZip: ''
-	}
-	}
-
-
-	let memberFirstName = '';
-  let email = '';
-  let gender = '';
-
-
-  const handleSubmit = async () => {
-    const formData = new URLSearchParams({
-      memberFirstName:''
-    });
-
-	let firstName = '';
-  let lastName = '';
-  let email = '';
-  let errors = {
-    firstName: '',
-    lastName: '',
-    email: '',
-  };
-  let isSubmitting = false;
-	 // Validate function
-	 const validateForm = () => {
-    let isValid = true;
-    // Clear previous errors
-    errors = { firstName: '', lastName: '', email: '' };
-
-    if (!firstName) {
-      errors.firstName = 'First Name is required.';
-      isValid = false;
-    }
-    if (!lastName) {
-      errors.lastName = 'Last Name is required.';
-      isValid = false;
-    }
-    if (!email) {
-      errors.email = 'Email is required.';
-      isValid = false;
-    } else if (!validateEmail(email)) {
-      errors.email = 'Email must be a valid email address.';
-      isValid = false;
-    }
-
-    return isValid;
-  };
-	//email validation//
-	const validateEmail = (email: string) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-  };
-
-    // Send the form data to the `/member-account` route via POST
-    const response = await fetch('/member-account', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // Set the content type to form-encoded
-      body: formData.toString(), // Convert the form data to a string
-    });
-
-    if (response.ok) {
-      // Optionally handle the response if needed
-      const result = await response.json();
-      console.log('Form submitted:', result);
-      // Navigate to the member account page if necessary
-      goto('/member-account');
-    }
-  };
-	//TO DO// 1. fix the binding boolean on radio, 2. form submit to new route, display data  3. bonus section colors, 4 validation
-const submitHandler = () => {
-  alert(JSON.stringify(values, null, 2));
-};
-
-// const result = regSchema.validate(values);
-
-
-</script> -->
 <script lang="ts">
 	import { goto } from '$app/navigation'; // Import goto for navigation
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
@@ -135,10 +18,11 @@ const submitHandler = () => {
 	  email: '',
 	};
 	let checked: boolean = false;
+	let companyType: string |  undefined
 	let selected: string | boolean | undefined
 
 	let selectedItemDropdown: string | undefined;
-  
+  	export let value:  string 
 	// Simple validation function
 	const validateForm = () => {
 	  let isValid = true;
@@ -205,7 +89,7 @@ const submitHandler = () => {
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 										 <BoxedRadio 
-										
+												companyType=''
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
@@ -214,13 +98,13 @@ const submitHandler = () => {
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
-											bind:checked
+											companyType=''
 											bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
 											<BoxedRadio
-										
+										companyType=''
 												id="accountTypeAppService"
 												name="accountType"
 												bind:selected
@@ -236,11 +120,11 @@ const submitHandler = () => {
 										>
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
 											<BoxedRadio
-									
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
-												bind:selected
+												selected
+												bind:companyType
 												flexGrow>New Company</BoxedRadio
 											>
 
@@ -248,8 +132,8 @@ const submitHandler = () => {
 												id="accountCreateExisting"
 												name="accountCreateType"
 												value="existing"
-												bind:selected
-
+												bind:companyType
+												selected
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
@@ -264,7 +148,7 @@ const submitHandler = () => {
 						<AccordionItem active header="Company Information">
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
-								{#if selected !== 'existing'}
+								{#if companyType !== 'existing'}
 								<div id="companyInformationCollapse" class="col-12 col-xl-9">
 									<div class="wk-pb-4">
 										<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
@@ -349,13 +233,14 @@ const submitHandler = () => {
 									</div>
 								</div>
 								{/if}
-								{#if selected === 'existing'}
+								{#if companyType === 'existing'}
 								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 								>*Select Existing Company</Label
-							>
+							><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
 						
 								{/if}
 							</div>
+							<div>{selected}</div>
 						</AccordionItem>
 					</Accordion>
 					<!-- member information -->
