@@ -32,7 +32,7 @@
    <div class="form-Label fw-bold mb-2 d-flex flex-column flex-sm-row wk-gap-4 row wk-p-8 wk-pt-4 accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 
  <h2>Member Information</h2>
- <p><strong>Type of Account:</strong> {accountType}</p>
+ <p class='type'><strong>Type of Account:</strong> {accountType}</p>
  <p><strong>Member Account Origin</strong> {accountOrigin}</p>
   <p><strong>First Name:</strong> {firstName}</p>
   <p><strong>Last Name:</strong> {lastName}</p>
@@ -62,3 +62,9 @@
 
 </div>
 </main>
+
+<style>
+  .type {
+    text-transform: capitalize;
+  }
+</style>

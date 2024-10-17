@@ -16,9 +16,6 @@
 
 	const selectOption = (value: string, id: string) => {
     selected = value; 
-	if(selected !== 'agent'){
-		
-	}
   };
 </script>
 {#if companyType === ''}

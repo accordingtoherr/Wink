@@ -10,7 +10,8 @@
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
 	 let formData = {
-
+	accountType:'',
+	accountOrigin:'',
     firstName: '',
     lastName: '',
     email: '',
@@ -61,7 +62,6 @@ function validateForm() {
   }
 
 	</script>
-
 <main class="container-fluid px-0 overflow-y-auto">
 	<div
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
@@ -93,13 +93,13 @@ function validateForm() {
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:selected
+												bind:selected={formData.accountType}
 											
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
 											companyType=''
-											bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
+											bind:selected={formData.accountType} id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
@@ -107,14 +107,14 @@ function validateForm() {
 										companyType=''
 												id="accountTypeAppService"
 												name="accountType"
-												bind:selected
+												bind:selected={formData.accountType}
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
 										</div>
 									</div>
 									<div class="row">
-										{#if selected !== 'agent'}
+										{#if formData.accountType !== 'agent'}
 										<Label for="accountCreateType" class="form-Label fw-bold mb-2"
 											>New Member Account Origin</Label
 										>
