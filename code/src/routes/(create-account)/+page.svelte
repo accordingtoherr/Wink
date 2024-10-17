@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	
 
@@ -11,40 +10,58 @@
 	import data from "../../lib/app/server/data.json"
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
-	let firstName = '';
-	let lastName = '';
-	let email = '';
-	let errors = {
-	  firstName: '',
-	  lastName: '',
-	  email: '',
-	};
-	let checked: boolean = false;
-	let companyType: string |  undefined
-	let selected: string | boolean | undefined
-	let selectedItemDropdown: string | undefined;
 
-	// Simple validation function
-	const validateForm = () => {
-	  let isValid = true;
-	  errors = { firstName: '', lastName: '', email: '' };
   
-	  if (!firstName) {
-		errors.firstName = 'First Name is required.';
-		isValid = false;
-	  }
-	  if (!lastName) {
-		errors.lastName = 'Last Name is required.';
-		isValid = false;
-	  }
-	  if (!email) {
-		errors.email = 'Email is required.';
-		isValid = false;
-	  }
-  
-	  return isValid;
-	};
-	let formData = { firstName: '', lastName: '', email: '' };
+	let checked: boolean = false;
+	let companyType: string |  undefined;
+	let selected: string;
+	let selectedItemDropdown: string;
+
+	let formData = {
+	existingCoName: '',
+    accountType: '',
+	accountOrigin: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+	phone: '',
+	job:'',
+	companyName:'',
+	companyPhone:'',
+	companyAddress: '',
+	companyUrl: '',
+	companyCity: ''
+
+	
+  };
+
+	let error = null;
+
+function validateForm() {
+  if (!formData.firstName || !formData.lastName || !formData.email) {
+	return 'All fields are required.';
+  }
+  if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+	return 'Please enter a valid email address.';
+  }
+  return null;
+}
+	async function handleSubmit(event: any) {
+    event.preventDefault();
+
+    // Clear previous error
+    error = null;
+
+    // Perform validation
+    error = validateForm();
+    if (error) {
+      return; // If there's an error, stop submission
+    }
+
+    // Navigate to the member-account page with query parameters
+    const queryParams = new URLSearchParams(formData).toString();
+    await goto(`/member-account?${queryParams}`);
+  }
 
 	</script>
 
@@ -53,7 +70,6 @@
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
 		style="min-height: 100%; height: fit-content;"
 	>
-	{JSON.stringify(formData)}
 		<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 			<div class="d-flex flex-column align-items-start">
 				<h1 class="wk-fs-3xl">Create Account</h1>
@@ -61,8 +77,7 @@
 					Create new member account or add member to existing corporate accounts.
 				</p>
 				<form
-				 method="post" 
-				  action="?/submit"
+				on:submit={handleSubmit}
 				class="vstack wk-gap-4 wk-gap-lg-8">
 				
 					<!-- account settings -->
@@ -81,13 +96,12 @@
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:selected
-											
+												bind:selected={formData.accountType}
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
 											companyType=''
-											bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
+											bind:selected={formData.accountType} id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
@@ -95,7 +109,7 @@
 										companyType=''
 												id="accountTypeAppService"
 												name="accountType"
-												bind:selected
+												bind:selected={formData.accountType}
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
@@ -111,7 +125,7 @@
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
-												selected
+												bind:selected={formData.accountOrigin}
 												bind:companyType
 												flexGrow>New Company</BoxedRadio
 											>
@@ -121,7 +135,7 @@
 												name="accountCreateType"
 												value="existing"
 												bind:companyType
-												selected
+												bind:selected={formData.accountOrigin}
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
@@ -140,7 +154,7 @@
 								<div id="companyInformationCollapse" class="col-12 col-xl-9">
 									<div class="wk-pb-4">
 										<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
-										<Input  id="companyName" type="text" name="companyName" class="form-control" />
+										<Input  bind:value={formData.companyName} id="companyName" type="text" name="companyName" class="form-control" />
 									</div>
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6">
@@ -152,6 +166,7 @@
 												type="tel"
 												name="companyPhoneNumber"
 												class="form-control"
+												bind:value={formData.companyPhone}
 												
 											/>
 										</div>
@@ -164,6 +179,7 @@
 												type="url"
 												name="companyWebsiteUrl"
 												class="form-control"
+												bind:value={formData.companyUrl}
 												
 											/>
 										</div>
@@ -178,6 +194,7 @@
 												type="text"
 												name="companyStreetAddress"
 												class="form-control"
+												bind:value={formData.companyAddress}
 												
 											/>
 										</div>
@@ -202,6 +219,7 @@
 													type="text"
 													name="companyCity"
 													class="form-control"
+													bind:value={formData.companyCity}
 													
 												/>
 											</div>
@@ -224,7 +242,7 @@
 								{#if companyType === 'existing'}
 								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 								>*Select Existing Company</Label
-							><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
+							><Dropdown {selectedItemDropdown} bind:value={formData.existingCoName} />
 						
 								{/if}
 							</div>
@@ -248,7 +266,7 @@
 												class="form-control"
 												bind:value={formData.firstName}
 											/>
-											{formData.firstName}
+
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
@@ -257,7 +275,7 @@
 												type="text"
 												name="memberLastName"
 												class="form-control"
-												bind:value={lastName}
+												bind:value={formData.lastName}
 											/>
 										</div>
 									</div>
@@ -269,12 +287,12 @@
 												type="text"
 												name="memberEmail"
 												class="form-control"
-												bind:value={email}
+												bind:value={formData.email}
 											/>
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
-											<Input 	 id="jobTitle" type="text" name="jobTitle" class="form-control" />
+											<Input bind:value={formData.job} id="jobTitle" type="text" name="jobTitle" class="form-control" />
 										</div>
 									</div>
 									<div class="row">
@@ -285,6 +303,7 @@
 											<Input
 												id="memberPhoneNumber"
 												type="tel"
+												bind:value={formData.phone}
 												name="memberPhoneNumber"
 												class="form-control"
 												
