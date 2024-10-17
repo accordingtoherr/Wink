@@ -38,12 +38,20 @@
 	let error = null;
 
 function validateForm() {
+	let phone_number_regex = "(\+\d{1,3})?\s?\(?\d{1,4}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
   if (!formData.firstName || !formData.lastName || !formData.email) {
 	return 'All fields are required.';
   }
   if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
 	return 'Please enter a valid email address.';
   }
+
+  if (!phone_number_regex.match(formData.phone || formData.companyPhone)) {
+	return 'Please enter a valid phone number';
+  }
+
+
+
   return null;
 }
 	async function handleSubmit(event: any) {
