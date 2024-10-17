@@ -1,6 +1,5 @@
-<script lang="ts">
-	
 
+<script lang="ts">
 //TO DO 1 display data  3. bonus section colors, 4 validation//
 	import { goto } from '$app/navigation'; // Import goto for navigation
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
@@ -10,17 +9,8 @@
 	import data from "../../lib/app/server/data.json"
 	// import { regSchema } from '../../schema';
 	 import Dropdown from '$lib/app/component/Dropdown.svelte'
+	 let formData = {
 
-  
-	let checked: boolean = false;
-	let companyType: string |  undefined;
-	let selected: string;
-	let selectedItemDropdown: string;
-
-	let formData = {
-	existingCoName: '',
-    accountType: '',
-	accountOrigin: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -33,25 +23,24 @@
 	companyCity: ''
 
 	
-  };
+  }
+  
+	let checked: boolean = false;
+	let companyType: string |  undefined
+	let selected: string | boolean | undefined
+	let selectedItemDropdown: string | undefined;
+
+
 
 	let error = null;
 
 function validateForm() {
-	let phone_number_regex = "(\+\d{1,3})?\s?\(?\d{1,4}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
   if (!formData.firstName || !formData.lastName || !formData.email) {
 	return 'All fields are required.';
   }
   if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
 	return 'Please enter a valid email address.';
   }
-
-  if (!phone_number_regex.match(formData.phone || formData.companyPhone)) {
-	return 'Please enter a valid phone number';
-  }
-
-
-
   return null;
 }
 	async function handleSubmit(event: any) {
@@ -104,12 +93,13 @@ function validateForm() {
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:selected={formData.accountType}
+												bind:selected
+											
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
 											companyType=''
-											bind:selected={formData.accountType} id="accountTypeAgent" name="accountType" value="agent" flexGrow
+											bind:selected id="accountTypeAgent" name="accountType" value="agent" flexGrow
 												>Agent</BoxedRadio
 											>
 
@@ -117,7 +107,7 @@ function validateForm() {
 										companyType=''
 												id="accountTypeAppService"
 												name="accountType"
-												bind:selected={formData.accountType}
+												bind:selected
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
@@ -133,7 +123,7 @@ function validateForm() {
 												id="accountCreateNew"
 												name="accountCreateType"
 												value="new company"
-												bind:selected={formData.accountOrigin}
+												selected
 												bind:companyType
 												flexGrow>New Company</BoxedRadio
 											>
@@ -143,7 +133,7 @@ function validateForm() {
 												name="accountCreateType"
 												value="existing"
 												bind:companyType
-												bind:selected={formData.accountOrigin}
+												selected
 												flexGrow>Existing Company</BoxedRadio
 											>
 										</div>
@@ -250,7 +240,7 @@ function validateForm() {
 								{#if companyType === 'existing'}
 								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 								>*Select Existing Company</Label
-							><Dropdown {selectedItemDropdown} bind:value={formData.existingCoName} />
+							><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
 						
 								{/if}
 							</div>
@@ -274,7 +264,7 @@ function validateForm() {
 												class="form-control"
 												bind:value={formData.firstName}
 											/>
-
+											{formData.firstName}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
