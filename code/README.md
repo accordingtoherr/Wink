@@ -8,11 +8,11 @@ Thank you for your interest in the Fullstack Developer position at Wink, Inc. Th
 
 You are tasked with enhancing a provided SvelteKit application that includes a form for creating or adding a member to a company account. The application already includes basic components and structure. Your goal is to implement the specified challenges and bonus tasks to demonstrate your skills.
 
-1. **BoxedRadio Component Interaction**
+1. **BoxedRadio Component Interaction** - check
    - **Objective:** Ensure that the `BoxedRadio` component correctly reflects the selected state.
    - **Details:** When a user selects a radio button, the component should update its state accordingly and reflect the selected option is highlighted correctly.
 
-2. **Render Existing Company Dropdown**
+2. **Render Existing Company Dropdown** check
    - **Objective:** Dynamically adjust form fields based on the selected account type.
    - **Details:** 
      - **Agent Account Type:**
@@ -24,7 +24,7 @@ You are tasked with enhancing a provided SvelteKit application that includes a f
        - Refer to the Figma design for visual guidance on this scenario.
    - **Implementation Hint:** Utilize the provided `data.json` file to simulate data from database.
 
-3. **Form Submission and Data Handling**
+3. **Form Submission and Data Handling** - check
    - **Objective:** Implement form submission functionality that collects all input data and displays the results on a different page or route.
    - **Details:** Upon clicking the submit button, validate and gather all form data into a JSON object, then navigate to a new route (e.g., `/member-account`) that presents the submitted information in a user-friendly format.
 
@@ -32,16 +32,16 @@ You are tasked with enhancing a provided SvelteKit application that includes a f
 
 - **Form Validation**
   - **Member:**
-    - First Name, Last Name, and Email is required.
+    - First Name, Last Name, and Email is required. - check
     - Email must be a valid email address.
   - **Company Name:**
-    - Required field if the account type is "Corporate" or "Application Service".
+    - Required field if the account type is "Corporate" or "Application Service". check
   - **Phone Number:**
     - Must be a valid phone number format.
   - **Zip Code:**
     - Must be a valid zip code format.
   - **UI Enhancements:**
-    - Add an asterisk (*) next to all required fields to indicate their necessity.
+    - Add an asterisk (*) next to all required fields to indicate their necessity. check
     - Utilize Bootstrap's built-in error components to display validation messages as per the Figma design.
 
 - **Subscription/Billing Section**
@@ -52,7 +52,7 @@ You are tasked with enhancing a provided SvelteKit application that includes a f
   - **Styling:**
     - Utilize theme colors for backgrounds and text using the existing CSS variables in the `scss` folder. Take advantage of any utility helper classes you can find. 
     - Ensure the section is responsive across different device sizes.
-  - **Account Type Specific Subscriptions:**
+  - **Account Type Specific Subscriptions:** - done
     - For the "Agent" Account Type, only the "AnnuitySpecs" and "LifeSpecs" subscriptions are available.
     - Hide the other two subscription options from the form.
     - An example of this scenario can be found in the Figma design.

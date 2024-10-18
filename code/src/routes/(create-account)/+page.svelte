@@ -1,95 +1,62 @@
-
 <script lang="ts">
-//TO DO bonus section colors, 4 validation//
+	//TO DO bonus section colors, 4 validation//
 	import { goto } from '$app/navigation'; // Import goto for navigation
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
-	import { Accordion, AccordionItem, Input, Label
-} from '@sveltestrap/sveltestrap';
-	import data from "../../lib/app/server/data.json"
+	import { Accordion, AccordionItem, Input, Label } from '@sveltestrap/sveltestrap';
+	import data from '../../lib/app/server/data.json';
 	// import { regSchema } from '../../schema';
-	 import Dropdown from '$lib/app/component/Dropdown.svelte'
-	 let formData = {
-	accountType:'',
-	accountOrigin:'',
-    firstName: '',
-    lastName: '',
-    email: '',
-	phone: '',
-	job:'',
-	companyName:'',
-	companyPhone:'',
-	companyAddress: '',
-	companySuite:'',
-	companyUrl: '',
-	companyCity: '',
-	companyState: '',
-	companyZip: ''
+	import Dropdown from '$lib/app/component/Dropdown.svelte';
 
-	
-  }
-  let errors = {
-    firstName: '',
-    lastName: '',
-    email: ''
-  };
+	let formData = {
+		accountType: '',
+		accountOrigin: '',
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
+		job: '',
+		companyName: '',
+		companyPhone: '',
+		companyAddress: '',
+		companySuite: '',
+		companyUrl: '',
+		companyCity: '',
+		companyState: '',
+		companyZip: ''
+	};
 
-  const emailRegex = /^\S+@\S+\.\S+$/;
-  
-	let companyType: string |  undefined
+	let errors = {
+		firstName: '',
+		lastName: '',
+		email: ''
+	};
+
+	const emailRegex = /^\S+@\S+\.\S+$/;
+
 	let selected: string | boolean | undefined
 	let selectedItemDropdown: string | undefined;
-  // Reactive validation logic
-  $: errors.firstName = formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
-  $: errors.lastName = formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
-  $: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
+	// Reactive validation logic
+	$: errors.firstName =
+		formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
+	$: errors.lastName =
+		formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
+	$: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
 
-  // Check if the form is valid
-  $: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
+	// Check if the form is valid
+	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
 
+	async function handleSubmit(event: any) {
+		event.preventDefault();
 
-// function validateForm() {
-//   if (!formData.firstName || !formData.lastName || !formData.email) {
-// 	return 'All fields are required.';
-//   }
-//   if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-// 	return 'Please enter a valid email address.';
-//   }
-//   return null;
-// }
-// 	async function handleSubmit(event: any) {
-//     event.preventDefault();
+		if (isFormValid) {
+			const queryParams = new URLSearchParams(formData).toString();
+			await goto(`/member-account?${queryParams}`);
+		} else {
+		}
+	}
+</script>
 
-//     // Clear previous error
-//     error = null;
-
-//     // Perform validation
-// 	if (isFormValid) {
-//     error = validateForm();
-// 	console.log('er', error)
-// 	if (isFormValid) {
-//       alert('Form submitted successfully!');
-//       // Handle form submission (e.g., send to server)
-//     } else {
-//       alert('Please correct the errors before submitting the form.');
-//     }
-
-//     // Navigate to the member-account page with query parameters
-//     const queryParams = new URLSearchParams(formData).toString();
-//     await goto(`/member-account?${queryParams}`);
-//   }
-function handleSubmit(event: any) {
-    event.preventDefault();
-
-    if (isFormValid) {
-      alert('Form submitted successfully!');
-      // Handle form submission (e.g., send to server)
-    } else {
-      
-    }
-  }
-
-	</script>
 <main class="container-fluid px-0 overflow-y-auto">
 	<div
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
@@ -101,10 +68,7 @@ function handleSubmit(event: any) {
 				<p class="subtitle">
 					Create new member account or add member to existing corporate accounts.
 				</p>
-				<form
-				on:submit={handleSubmit}
-				class="vstack wk-gap-4 wk-gap-lg-8">
-				
+				<form on:submit={handleSubmit} class="vstack wk-gap-4 wk-gap-lg-8">
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
@@ -115,23 +79,27 @@ function handleSubmit(event: any) {
 										<Label for="accountType" class="form-Label fw-bold mb-2"
 											>Choose Account Type</Label
 										>
+
 										<div class="d-flex flex-column flex-sm-row wk-gap-4">
-										 <BoxedRadio 
-												companyType=''
+											<BoxedRadio
+												companyType=""
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:selected={formData.accountType}
+												bind:selected
 												flexGrow>Corporate</BoxedRadio
 											>
-											<BoxedRadio 
-											companyType=''
-											bind:selected={formData.accountType} id="accountTypeAgent" name="accountType" value="agent" flexGrow
-												>Agent</BoxedRadio
+											<BoxedRadio
+												companyType=""
+												bind:selected={formData.accountType}
+												id="accountTypeAgent"
+												name="accountType"
+												value="agent"
+												flexGrow>Agent</BoxedRadio
 											>
 
 											<BoxedRadio
-										companyType=''
+												companyType=""
 												id="accountTypeAppService"
 												name="accountType"
 												bind:selected={formData.accountType}
@@ -142,30 +110,30 @@ function handleSubmit(event: any) {
 									</div>
 									<div class="row">
 										{#if formData.accountType !== 'agent'}
-										<Label for="accountCreateType" class="form-Label fw-bold mb-2"
-											>New Member Account Origin</Label
-										>
-										<div class="d-flex flex-column flex-sm-row wk-gap-4">
-											<BoxedRadio
-												id="accountCreateNew"
-												name="accountCreateType"
-												value="new company"
-												selected
-												bind:companyType
-												flexGrow>New Company</BoxedRadio
+											<Label for="accountCreateType" class="form-Label fw-bold mb-2"
+												>New Member Account Origin</Label
 											>
+											<div class="d-flex flex-column flex-sm-row wk-gap-4">
+												<BoxedRadio
+													id="accountCreateNew"
+													name="accountCreateType"
+													value="new company"
+													selected
+													bind:companyType={formData.accountOrigin}
+													flexGrow>New Company</BoxedRadio
+												>
 
-											<BoxedRadio
-												id="accountCreateExisting"
-												name="accountCreateType"
-												value="existing"
-												bind:companyType
-												selected
-												flexGrow>Existing Company</BoxedRadio
-											>
-										</div>
+												<BoxedRadio
+													id="accountCreateExisting"
+													name="accountCreateType"
+													value="existing"
+													bind:companyType={formData.accountOrigin}
+													selected
+													flexGrow>Existing Company</BoxedRadio
+												>
+											</div>
 										{/if}
-									</div> 
+									</div>
 								</div>
 							</div>
 						</AccordionItem>
@@ -175,101 +143,107 @@ function handleSubmit(event: any) {
 						<AccordionItem active header="Company Information">
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
-								{#if companyType !== 'existing'}
-								<div id="companyInformationCollapse" class="col-12 col-xl-9">
-									<div class="wk-pb-4">
-										<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
-										<Input  bind:value={formData.companyName} id="companyName" type="text" name="companyName" class="form-control" />
-									</div>
-									<div class="row wk-pb-4">
-										<div class="col-12 col-md-6">
-											<Label for="companyPhoneNumber" class="form-Label fw-bold mb-2"
-												>Company Phone Number</Label
-											>
-											<Input
-												id="companyPhoneNumber"
-												type="tel"
-												name="companyPhoneNumber"
-												class="form-control"
-												bind:value={formData.companyPhone}
-												
-											/>
-										</div>
-										<div class="col-12 col-md-6">
-											<Label for="companyWebsiteUrl" class="form-Label fw-bold mb-2"
-												>Company Website</Label
-											>
-											<Input
-												id="companyWebsiteUrl"
-												type="url"
-												name="companyWebsiteUrl"
-												class="form-control"
-												bind:value={formData.companyUrl}
-												
-											/>
-										</div>
-									</div>
-									<div id="companyAddress">
+								{#if formData.accountOrigin !== 'existing'}
+									<div id="companyInformationCollapse" class="col-12 col-xl-9">
 										<div class="wk-pb-4">
-											<Label for="companyStreetAddress" class="form-Label fw-bold mb-2"
-												>Street Address</Label
-											>
+											<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
 											<Input
-												id="companyStreetAddress"
+												bind:value={formData.companyName}
+												id="companyName"
 												type="text"
-												name="companyStreetAddress"
+												name="companyName"
 												class="form-control"
-												bind:value={formData.companyAddress}
-												
 											/>
 										</div>
-										<div class="wk-pb-4">
-											<Label for="companySuite" class="form-Label fw-bold mb-2"
-												>Suite, Floor, etc. (optional)</Label
-											>
-											<Input
-												id="companySuite"
-												type="text"
-												name="companySuite"
-												class="form-control"
-												bind:value={formData.companySuite}
-												
-											/>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
-												<Label for="companyCity" class="form-Label fw-bold mb-2">City</Label>
+										<div class="row wk-pb-4">
+											<div class="col-12 col-md-6">
+												<Label for="companyPhoneNumber" class="form-Label fw-bold mb-2"
+													>Company Phone Number</Label
+												>
 												<Input
-													id="companyCity"
-													type="text"
-													name="companyCity"
+													id="companyPhoneNumber"
+													type="tel"
+													name="companyPhoneNumber"
 													class="form-control"
-													bind:value={formData.companyCity}
-													
+													bind:value={formData.companyPhone}
 												/>
 											</div>
-											<div class="col-8 col-md-2 wk-pb-4 wk-pb-md-0">
-												<Label for="companyState" class="form-Label fw-bold mb-2">State</Label>
-												<Input bind:value={formData.companyState} type="select">
-													{#each ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'] as option}
-														<option>{option}</option>
-													{/each}
-												</Input>
+											<div class="col-12 col-md-6">
+												<Label for="companyWebsiteUrl" class="form-Label fw-bold mb-2"
+													>Company Website</Label
+												>
+												<Input
+													id="companyWebsiteUrl"
+													type="url"
+													name="companyWebsiteUrl"
+													class="form-control"
+													bind:value={formData.companyUrl}
+												/>
 											</div>
-											<div class="col-8 col-md-4 wk-pb-md-0">
-												<Label for="companyZip" class="form-Label fw-bold mb-2">Zip Code</Label>
-												<Input  bind:value={formData.companyZip} id="companyZip" type="text" name="companyZip" class="form-control" />
+										</div>
+										<div id="companyAddress">
+											<div class="wk-pb-4">
+												<Label for="companyStreetAddress" class="form-Label fw-bold mb-2"
+													>Street Address</Label
+												>
+												<Input
+													id="companyStreetAddress"
+													type="text"
+													name="companyStreetAddress"
+													class="form-control"
+													bind:value={formData.companyAddress}
+												/>
+											</div>
+											<div class="wk-pb-4">
+												<Label for="companySuite" class="form-Label fw-bold mb-2"
+													>Suite, Floor, etc. (optional)</Label
+												>
+												<Input
+													id="companySuite"
+													type="text"
+													name="companySuite"
+													class="form-control"
+													bind:value={formData.companySuite}
+												/>
+											</div>
+
+											<div class="row">
+												<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
+													<Label for="companyCity" class="form-Label fw-bold mb-2">City</Label>
+													<Input
+														id="companyCity"
+														type="text"
+														name="companyCity"
+														class="form-control"
+														bind:value={formData.companyCity}
+													/>
+												</div>
+												<div class="col-8 col-md-2 wk-pb-4 wk-pb-md-0">
+													<Label for="companyState" class="form-Label fw-bold mb-2">State</Label>
+													<Input bind:value={formData.companyState} type="select">
+														{#each ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'] as option}
+															<option>{option}</option>
+														{/each}
+													</Input>
+												</div>
+												<div class="col-8 col-md-4 wk-pb-md-0">
+													<Label for="companyZip" class="form-Label fw-bold mb-2">Zip Code</Label>
+													<Input
+														bind:value={formData.companyZip}
+														id="companyZip"
+														type="text"
+														name="companyZip"
+														class="form-control"
+													/>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 								{/if}
-								{#if companyType === 'existing'}
-								<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
-								>*Select Existing Company</Label
-							><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
-						
+								{#if formData.accountOrigin === 'existing'}
+									<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
+										>*Select Existing Company</Label
+									><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
 								{/if}
 							</div>
 						</AccordionItem>
@@ -282,19 +256,19 @@ function handleSubmit(event: any) {
 								<div class="col-12 col-xl-9">
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
-											<Label for="memberFirstName" class="form-Label fw-bold mb-2">*First Name</Label
+											<Label for="memberFirstName" class="form-Label fw-bold mb-2"
+												>*First Name</Label
 											>
 											<Input
 												id="memberFirstName"
 												type="text"
-												
 												name="memberFirstName"
 												class="form-control"
 												bind:value={formData.firstName}
 											/>
 											{#if errors.firstName}
-											<p style="alert alert-danger ">{errors.firstName}</p>
-										  {/if}
+												<p style="alert alert-danger ">{errors.firstName}</p>
+											{/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
@@ -323,7 +297,13 @@ function handleSubmit(event: any) {
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
-											<Input bind:value={formData.job} id="jobTitle" type="text" name="jobTitle" class="form-control" />
+											<Input
+												bind:value={formData.job}
+												id="jobTitle"
+												type="text"
+												name="jobTitle"
+												class="form-control"
+											/>
 										</div>
 									</div>
 									<div class="row">
@@ -337,7 +317,6 @@ function handleSubmit(event: any) {
 												bind:value={formData.phone}
 												name="memberPhoneNumber"
 												class="form-control"
-												
 											/>
 										</div>
 										<div class="col-8 col-md-3">
@@ -347,14 +326,13 @@ function handleSubmit(event: any) {
 												type="text"
 												name="memberPhoneExt"
 												class="form-control"
-											
 											/>
 										</div>
 									</div>
 								</div>
 							</div>
 						</AccordionItem>
-					</Accordion>	
+					</Accordion>
 					<!-- Subscription/Billing -->
 					<!-- <Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Subscription/Billing">
@@ -385,10 +363,13 @@ function handleSubmit(event: any) {
 							{/if}
 						</AccordionItem>
 					</Accordion>	 -->
-				
+
 					<div>
-						<button id="submitCreateAccountBtn" disabled={!isFormValid} type="submit" class="btn btn-lg wk-btn-theme"
-							>Submit</button
+						<button
+							id="submitCreateAccountBtn"
+							disabled={!isFormValid}
+							type="submit"
+							class="btn btn-lg wk-btn-theme">Submit</button
 						>
 					</div>
 				</form>
@@ -414,6 +395,6 @@ function handleSubmit(event: any) {
 	}
 
 	label.dropdown {
-    padding-left: 0;
-}
+		padding-left: 0;
+	}
 </style>

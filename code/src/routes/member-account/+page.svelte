@@ -1,8 +1,24 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
 
-  let firstName, accountType, lastName, email, phone, job, selectedCoDropdown,
-   companyAddress, companySuite, companyZip, companyCity, companyState, companyName, companyPhone, companyUrl, accountOrigin, existingCoName
+	let firstName:  string;
+	let accountType: string;
+  let accountOrigin: string;
+  let lastName: string;
+  let email: string;
+  let job: string;
+  let phone: string;
+  let selectedCoDropdown: string;
+  let companyState: string;
+  let companyAddress: string;
+  let companySuite: string;
+  let companyZip: string;
+  let companyCity: string;
+  let companyName: string;
+  let companyPhone: string;
+  let companyUrl: string;
+  let existingCoName: string;
+
 
   // Subscribe to page store to get the query parameters
   $: {
@@ -65,7 +81,9 @@
  {/if}
  <p><strong>City:</strong> {companyCity}</p>
  <p><strong>State:</strong> {companyState}</p>
+ {#if companyZip}
  <p><strong>Zip:</strong> {companyZip}</p>
+ {/if}
 {/if}
 </div>
 

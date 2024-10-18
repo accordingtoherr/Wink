@@ -17,7 +17,9 @@
 	const selectOption = (value: string, id: string) => {
     selected = value; 
   };
+
 </script>
+
 {#if companyType === ''}
 <label
 	for={id}
