@@ -45,14 +45,16 @@
 
 	// Check if the form is valid
 	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
+	console.log('is', isFormValid)
 
 	async function handleSubmit(event: any) {
 		event.preventDefault();
-
-		if (isFormValid) {
+		if (isFormValid !== undefined) {
 			const queryParams = new URLSearchParams(formData).toString();
 			await goto(`/member-account?${queryParams}`);
 		} else {
+			//log errors if form is not valid//
+			console.log(event.errors)
 		}
 	}
 </script>
@@ -267,7 +269,7 @@
 												bind:value={formData.firstName}
 											/>
 											{#if errors.firstName}
-												<p style="alert alert-danger ">{errors.firstName}</p>
+												<p class="alert alert-danger">{errors.firstName}</p>
 											{/if}
 										</div>
 										<div class="col-12 col-md-6">
@@ -279,6 +281,9 @@
 												class="form-control"
 												bind:value={formData.lastName}
 											/>
+											{#if errors.lastName}
+												<p class="alert alert-danger">{errors.lastName}</p>
+											{/if}
 										</div>
 									</div>
 									<div class="row wk-pb-4">
@@ -291,9 +296,9 @@
 												class="form-control"
 												bind:value={formData.email}
 											/>
-											{#if errors.email === 'Please enter a valid email address.'}
-												{errors.email}
-											{/if}
+											{#if errors.email}
+											<p class="alert alert-danger">{errors.email}</p>
+										{/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
@@ -396,5 +401,15 @@
 
 	label.dropdown {
 		padding-left: 0;
+	}
+
+	p.error {
+		display: none;
+
+
+	}
+
+	p.error:focus {
+		display: block;
 	}
 </style>
