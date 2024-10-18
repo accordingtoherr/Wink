@@ -40,7 +40,9 @@
 	let selected: string | boolean | undefined
 	let selectedItemDropdown: string | undefined;
   // Reactive validation logic
-
+  $: errors.firstName = formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
+  $: errors.lastName = formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
+  $: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
 
   // Check if the form is valid
   $: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
@@ -83,9 +85,7 @@ function handleSubmit(event: any) {
       alert('Form submitted successfully!');
       // Handle form submission (e.g., send to server)
     } else {
-        $: errors.firstName = formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
-  $: errors.lastName = formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
-  $: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
+      
     }
   }
 
