@@ -41,11 +41,10 @@
 		formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
 	$: errors.lastName =
 		formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
-	$: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
+	$: errors.email = !emailRegex.test(formData.email) ? 'Must enter a valid email address.' : '';
 
 	// Check if the form is valid
 	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
-	console.log('is', isFormValid)
 
 	async function handleSubmit(event: any) {
 		event.preventDefault();
@@ -70,7 +69,7 @@
 				<p class="subtitle">
 					Create new member account or add member to existing corporate accounts.
 				</p>
-				<form on:submit={handleSubmit} class="vstack wk-gap-4 wk-gap-lg-8">
+				<form on:submit={handleSubmit} class="vstack wk-gap-4 wk-gap-lg-8 needs-validation">
 					<!-- account settings -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Account Settings">
@@ -253,6 +252,16 @@
 					<!-- member information -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Member Information">
+							{#if !isFormValid && formData.firstName.length > 0 && formData.firstName.length < 2}
+							<p class="alert alert-danger">{errors.firstName}</p>
+					
+							{/if}
+							{#if !isFormValid && formData.lastName.length > 0 && formData.lastName.length < 2}
+							<p class="alert alert-danger">{errors.lastName}</p>
+							{/if}
+							{#if !isFormValid && formData.email.length > 0 && formData.email.length < 2}
+							<p class="alert alert-danger">{errors.email}</p>
+							{/if}
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
 								<div class="col-12 col-xl-9">
@@ -262,43 +271,35 @@
 												>*First Name</Label
 											>
 											<Input
-												id="memberFirstName"
+												id={errors.firstName !== '' && !isFormValid ? 'error-outline' : 'memberFirstName'}
 												type="text"
 												name="memberFirstName"
-												class="form-control"
+												class= 'form-control'
 												bind:value={formData.firstName}
 											/>
-											{#if errors.firstName}
-												<p class="alert alert-danger">{errors.firstName}</p>
-											{/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
 											<Input
-												id="memberLastName"
+											    id={errors.firstName !== '' ? 'error-outline' : 'memberLastName'}
 												type="text"
 												name="memberLastName"
 												class="form-control"
 												bind:value={formData.lastName}
 											/>
-											{#if errors.lastName}
-												<p class="alert alert-danger">{errors.lastName}</p>
-											{/if}
 										</div>
 									</div>
 									<div class="row wk-pb-4">
 										<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
 											<Label for="memberEmail" class="form-Label fw-bold mb-2">*Email</Label>
 											<Input
-												id="memberEmail"
+											   id={errors.firstName !== '' ? 'error-outline' : 'memberEmail'}
 												type="text"
 												name="memberEmail"
 												class="form-control"
 												bind:value={formData.email}
 											/>
-											{#if errors.email}
-											<p class="alert alert-danger">{errors.email}</p>
-										{/if}
+				
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
@@ -372,8 +373,8 @@
 					<div>
 						<button
 							id="submitCreateAccountBtn"
-							disabled={!isFormValid}
 							type="submit"
+							disabled={!isFormValid}
 							class="btn btn-lg wk-btn-theme">Submit</button
 						>
 					</div>
@@ -391,6 +392,9 @@
 		--bs-accordion-inner-border-radius: calc(1.25rem -(var(--bs-border-width)));
 		--bs-accordion-active-bg: transparent;
 	}
+	input#error-outline {
+    border: 1px solid red;
+}
 
 	div :global(.accordion-button) {
 		font-weight: 800;
@@ -412,4 +416,6 @@
 	p.error:focus {
 		display: block;
 	}
+
+
 </style>
