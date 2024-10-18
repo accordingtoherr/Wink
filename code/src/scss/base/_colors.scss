@@ -1,0 +1,241 @@
+/* colors.scss */
+
+// BASE COLORS
+// Wink Purple
+$purple: #5d5ba0;
+$purple-25: #fcfaff;
+$purple-50: #f4eefb;
+$purple-100: #dfd4f2;
+$purple-200: #b9a7df;
+$purple-300: #9689cb;
+$purple-400: #726db4;
+$purple-500: #5d5ba0;
+$purple-600: #4b4a88;
+$purple-700: #3d3d73;
+$purple-800: #242445;
+$purple-900: #1a1a32;
+
+// Wink Green
+$green: #929a3b;
+$green-25: #fcfdf7;
+$green-50: #f7f8ec;
+$green-100: #eff1da;
+$green-200: #dfe3b7;
+$green-300: #cfd590;
+$green-400: #c2ca73;
+$green-500: #929a3b;
+$green-600: #707635;
+$green-700: #565a25;
+$green-800: #292c11;
+$green-900: #1b1d11;
+
+// Wink Orange
+$orange: #f79725;
+$orange-25: #fffcfa;
+$orange-50: #fcf6f1;
+$orange-100: #fcead8;
+$orange-200: #fddcba;
+$orange-300: #ffcd99;
+$orange-400: #fbb872;
+$orange-500: #f79725;
+$orange-600: #d26a00;
+$orange-700: #a94a0a;
+$orange-800: #7b3605;
+$orange-900: #2f190a;
+
+// Warning Yellow
+$yellow: #fdb022;
+$yellow-50: #fffcf5;
+$yellow-100: #fffaeb;
+$yellow-200: #fef0c7;
+$yellow-300: #fedf89;
+$yellow-400: #fec84b;
+$yellow-500: #fdb022;
+$yellow-600: #f79009;
+$yellow-700: #dd6903;
+$yellow-800: #b54708;
+$yellow-900: #93370d;
+
+// Error Red
+$red: #f04438;
+$red-50: #fef3f2;
+$red-100: #fee4e2;
+$red-200: #fecdca;
+$red-300: #fda29b;
+$red-400: #f97066;
+$red-500: #f04438;
+$red-600: #d92d20;
+$red-700: #b42318;
+$red-800: #912018;
+$red-900: #6d1608;
+
+// Wink Gray
+$gray-25: #f9fafb;
+$gray-50: #f2f5f7;
+$gray-100: #e6ecef;
+$gray-200: #d6e0e5;
+$gray-300: #c7d4dc;
+$gray-400: #b1c3ce;
+$gray-500: #829eb0;
+$gray-600: #547487;
+$gray-700: #415968;
+$gray-800: #1d282f;
+$gray-900: #212529;
+
+$gray-alpha9: hsla(203, 23%, 15%, 0.9);
+$gray-alpha8: hsla(203, 23%, 15%, 0.8);
+$gray-alpha7: hsla(203, 23%, 15%, 0.7);
+$gray-alpha6: hsla(203, 23%, 15%, 0.6);
+$gray-alpha5: hsla(204, 23%, 21%, 0.5);
+$gray-alpha4: hsla(204, 23%, 21%, 0.4);
+$gray-alpha3: hsla(203, 23%, 33%, 0.3);
+$gray-alpha2: hsla(203, 23%, 33%, 0.2);
+$gray-alpha1: hsla(202, 23%, 43%, 0.1);
+$gray-alpha05: hsla(202, 23%, 43%, 0.05);
+
+$white: #ffffff;
+$white-alpha9: hsla(0, 0%, 100%, 0.9);
+$white-alpha8: hsla(0, 0%, 100%, 0.8);
+$white-alpha7: hsla(0, 0%, 100%, 0.7);
+$white-alpha6: hsla(0, 0%, 100%, 0.6);
+$white-alpha5: hsla(0, 0%, 100%, 0.5);
+$white-alpha4: hsla(0, 0%, 100%, 0.4);
+$white-alpha3: hsla(0, 0%, 100%, 0.3);
+$white-alpha2: hsla(0, 0%, 100%, 0.2);
+$white-alpha1: hsla(0, 0%, 100%, 0.1);
+
+:root {
+	/* Color RGB values */
+	--gray: 84, 116, 135;
+	--purple: 93, 91, 160;
+	--red: 217, 45, 32;
+	--orange: 210, 106, 0;
+	--yellow: 247, 144, 9;
+	--green: 112, 118, 53;
+}
+
+// BOOTSTRAP theme-color-variables
+$primary: $purple-500;
+$secondary: $orange-500;
+$success: $green-500;
+$danger: $red-500;
+$warning: $yellow-500;
+$info: $gray-500;
+$light: $gray-25;
+$dark: $gray-900;
+$border: $gray-alpha3;
+$white: #fff;
+$black: #000;
+
+// WINK Semantic Color Variables
+
+// Neutral
+$neutral-border-subtle: $gray-100;
+$neutral-border-light: $gray-alpha2;
+$neutral-border-light-solid: $gray-200;
+$neutral-border: $gray-alpha3;
+$neutral-border-solid: $gray-300;
+$neutral-border-darker: $gray-alpha5;
+
+$neutral-surface-default: $white;
+$neutral-surface-alpha: $white-alpha8;
+$neutral-surface-subtle: $gray-25;
+$neutral-surface-light: $gray-alpha05;
+$neutral-surface-mid-light: $gray-alpha1;
+$neutral-surface-medium: $gray-alpha2;
+$neutral-surface-toggle-off: $gray-alpha3;
+
+$neutral-text-title: $gray-900;
+$neutral-text-body: $gray-alpha9;
+$neutral-text-light: $gray-alpha8;
+$neutral-text-disabled: $gray-alpha7;
+$neutral-text-icon: $gray-alpha6;
+$neutral-text-icon-light: $gray-alpha4;
+$neutral-text-subtitle: $gray-alpha8;
+$neutral-text-negative: $white;
+
+// THEME VARIABLES
+
+// AS - Primary
+$primary-border-subtle: $purple-50;
+$primary-border-light: $purple-100;
+$primary-border-medium: $purple-200;
+$primary-border-accent: $purple-300;
+$primary-border-main: $purple-500;
+$primary-border-darker: $purple-600;
+
+$primary-surface-subtle: $purple-25;
+$primary-surface-light: $purple-50;
+$primary-surface-mid-light: $purple-100;
+$primary-surface-medium: $purple-200;
+$primary-surface-main: $purple-500;
+$primary-surface-darker: $purple-600;
+
+$primary-text-emphasis: $purple-500;
+$primary-icon-light: $purple-300;
+$primary-icon-main: $purple-400;
+$primary-text-emphasis-dark: $purple-700;
+$primary-shadow-glow: 0px 0px 10px 0px rgba(var(--purple), 0.2);
+
+// LS = Secondary
+$secondary-border-subtle: $orange-100;
+$secondary-border-light: $orange-200;
+$secondary-border-medium: $orange-300;
+$secondary-border-accent: $orange-400;
+$secondary-border-main: $orange-600;
+$secondary-border-darker: $orange-700;
+
+$secondary-surface-subtle: $orange-25;
+$secondary-surface-light: $orange-50;
+$secondary-surface-mid-light: $orange-100;
+$secondary-surface-medium: $orange-300;
+$secondary-surface-main: $orange-600;
+$secondary-surface-darker: $orange-700;
+
+$secondary-text-emphasis: $orange-700;
+$secondary-icon-light: $orange-400;
+$secondary-icon-main: $orange-500;
+$secondary-text-emphasis-dark: $orange-800;
+$secondary-shadow-glow: 0px 0px 10px 0px rgba(var(--orange), 0.2);
+
+// SMR - Success
+$success-border-subtle: $green-100;
+$success-border-light: $green-200;
+$success-border-medium: $green-300;
+$success-border-accent: $green-400;
+$success-border-main: $green-600;
+$success-border-darker: $green-700;
+
+$success-surface-subtle: $green-25;
+$success-surface-light: $green-50;
+$success-surface-mid-light: $green-100;
+$success-surface-medium: $green-300;
+$success-surface-main: $green-600;
+$success-surface-darker: $green-700;
+
+$success-text-emphasis: $green-600;
+$success-icon-light: $green-400;
+$success-icon-main: $green-500;
+$success-text-emphasis-dark: $green-700;
+$success-shadow-glow: 0px 0px 10px 0px rgba(var(--green), 0.2);
+
+// IIR - Info
+$info-border-subtle: $gray-100;
+$info-border-light: $gray-200;
+$info-border-medium: $gray-300;
+$info-border-accent: $gray-400;
+$info-border-main: $gray-600;
+$info-border-darker: $gray-700;
+
+$info-surface-subtle: $gray-25;
+$info-surface-light: $gray-50;
+$info-surface-mid-light: $gray-100;
+$info-surface-medium: $gray-300;
+$info-surface-main: $gray-600;
+$info-surface-darker: $gray-700;
+
+$info-text-emphasis: $gray-600;
+$info-icon-light: $gray-400;
+$info-icon-main: $gray-500;
+$info-text-emphasis-dark: $gray-700;
+$info-shadow-glow: 0px 0px 10px 0px rgba(var(--gray), 0.2);
