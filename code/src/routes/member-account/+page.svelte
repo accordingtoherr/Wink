@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
 
   let firstName, accountType, lastName, email, phone, job, selectedCoDropdown,
-   companyAddress, companyName, companyPhone, companyUrl, accountOrigin, existingCoName
+   companyAddress, companySuite, companyZip, companyCity, companyState, companyName, companyPhone, companyUrl, accountOrigin, existingCoName
 
   // Subscribe to page store to get the query parameters
   $: {
@@ -16,6 +16,10 @@
     companyName = params.get('companyName') || '';
     companyUrl = params.get('companyUrl') || '';
     companyPhone = params.get('companyPhone') || '';
+    companyAddress = params.get('companyAddress') || '';
+    companySuite = params.get('companySuite') || '';
+    companyCity = params.get('companyCity') || '';
+    companyState = params.get('companyState') || '';
     accountType = params.get('accountType') || '';
     accountOrigin = params.get('accountOrigin') || '';
     existingCoName = params.get('existingCoName') || '';
@@ -51,10 +55,17 @@
  <p><strong>Existing Company Name:</strong> {existingCoName}</p>
  {/if}
  {#if accountOrigin !== 'existing'}
- <p><strong>Company:</strong> {companyName}</p>
- <p><strong>Company Address:</strong> {companyAddress}</p>
+ <p><strong>Name:</strong> {companyName}</p>
+ <p><strong>Address:</strong> {companyAddress}</p>
 
- <p><strong>Company Phone:</strong> {companyPhone}</p>
+ <p><strong>Phone:</strong> {companyPhone}</p>
+ <p><strong>Address:</strong> {companyPhone}</p>
+ {#if companySuite !== ''}
+ <p><strong>Suite:</strong> {companySuite}</p>
+ {/if}
+ <p><strong>City:</strong> {companyCity}</p>
+ <p><strong>State:</strong> {companyState}</p>
+ <p><strong>Zip:</strong> {companyZip}</p>
 {/if}
 </div>
 

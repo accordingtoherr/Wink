@@ -1,6 +1,6 @@
 
 <script lang="ts">
-//TO DO 1 display data  3. bonus section colors, 4 validation//
+//TO DO bonus section colors, 4 validation//
 	import { goto } from '$app/navigation'; // Import goto for navigation
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
@@ -20,45 +20,73 @@
 	companyName:'',
 	companyPhone:'',
 	companyAddress: '',
+	companySuite:'',
 	companyUrl: '',
-	companyCity: ''
+	companyCity: '',
+	companyState: '',
+	companyZip: ''
 
 	
   }
+  let errors = {
+    firstName: '',
+    lastName: '',
+    email: ''
+  };
+
+  const emailRegex = /^\S+@\S+\.\S+$/;
   
-	let checked: boolean = false;
 	let companyType: string |  undefined
 	let selected: string | boolean | undefined
 	let selectedItemDropdown: string | undefined;
+  // Reactive validation logic
 
 
+  // Check if the form is valid
+  $: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
 
-	let error = null;
 
-function validateForm() {
-  if (!formData.firstName || !formData.lastName || !formData.email) {
-	return 'All fields are required.';
-  }
-  if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-	return 'Please enter a valid email address.';
-  }
-  return null;
-}
-	async function handleSubmit(event: any) {
+// function validateForm() {
+//   if (!formData.firstName || !formData.lastName || !formData.email) {
+// 	return 'All fields are required.';
+//   }
+//   if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+// 	return 'Please enter a valid email address.';
+//   }
+//   return null;
+// }
+// 	async function handleSubmit(event: any) {
+//     event.preventDefault();
+
+//     // Clear previous error
+//     error = null;
+
+//     // Perform validation
+// 	if (isFormValid) {
+//     error = validateForm();
+// 	console.log('er', error)
+// 	if (isFormValid) {
+//       alert('Form submitted successfully!');
+//       // Handle form submission (e.g., send to server)
+//     } else {
+//       alert('Please correct the errors before submitting the form.');
+//     }
+
+//     // Navigate to the member-account page with query parameters
+//     const queryParams = new URLSearchParams(formData).toString();
+//     await goto(`/member-account?${queryParams}`);
+//   }
+function handleSubmit(event: any) {
     event.preventDefault();
 
-    // Clear previous error
-    error = null;
-
-    // Perform validation
-    error = validateForm();
-    if (error) {
-      return; // If there's an error, stop submission
+    if (isFormValid) {
+      alert('Form submitted successfully!');
+      // Handle form submission (e.g., send to server)
+    } else {
+        $: errors.firstName = formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
+  $: errors.lastName = formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
+  $: errors.email = !emailRegex.test(formData.email) ? 'Please enter a valid email address.' : '';
     }
-
-    // Navigate to the member-account page with query parameters
-    const queryParams = new URLSearchParams(formData).toString();
-    await goto(`/member-account?${queryParams}`);
   }
 
 	</script>
@@ -94,7 +122,6 @@ function validateForm() {
 												name="accountType"
 												value="corporate"
 												bind:selected={formData.accountType}
-											
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio 
@@ -205,6 +232,7 @@ function validateForm() {
 												type="text"
 												name="companySuite"
 												class="form-control"
+												bind:value={formData.companySuite}
 												
 											/>
 										</div>
@@ -223,7 +251,7 @@ function validateForm() {
 											</div>
 											<div class="col-8 col-md-2 wk-pb-4 wk-pb-md-0">
 												<Label for="companyState" class="form-Label fw-bold mb-2">State</Label>
-												<Input  type="select">
+												<Input bind:value={formData.companyState} type="select">
 													{#each ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'] as option}
 														<option>{option}</option>
 													{/each}
@@ -231,7 +259,7 @@ function validateForm() {
 											</div>
 											<div class="col-8 col-md-4 wk-pb-md-0">
 												<Label for="companyZip" class="form-Label fw-bold mb-2">Zip Code</Label>
-												<Input  id="companyZip" type="text" name="companyZip" class="form-control" />
+												<Input  bind:value={formData.companyZip} id="companyZip" type="text" name="companyZip" class="form-control" />
 											</div>
 										</div>
 									</div>
@@ -264,7 +292,9 @@ function validateForm() {
 												class="form-control"
 												bind:value={formData.firstName}
 											/>
-											{formData.firstName}
+											{#if errors.firstName}
+											<p style="alert alert-danger ">{errors.firstName}</p>
+										  {/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
@@ -287,6 +317,9 @@ function validateForm() {
 												class="form-control"
 												bind:value={formData.email}
 											/>
+											{#if errors.email === 'Please enter a valid email address.'}
+												{errors.email}
+											{/if}
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
@@ -323,7 +356,7 @@ function validateForm() {
 						</AccordionItem>
 					</Accordion>	
 					<!-- Subscription/Billing -->
-					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
+					<!-- <Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Subscription/Billing">
 							<SubscriptionTypes 
 							name="AnnuitySpecs"
@@ -351,10 +384,10 @@ function validateForm() {
 			 
 							{/if}
 						</AccordionItem>
-					</Accordion>	
+					</Accordion>	 -->
 				
 					<div>
-						<button id="submitCreateAccountBtn" type="submit" class="btn btn-lg wk-btn-theme"
+						<button id="submitCreateAccountBtn" disabled={!isFormValid} type="submit" class="btn btn-lg wk-btn-theme"
 							>Submit</button
 						>
 					</div>
