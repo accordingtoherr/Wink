@@ -7,7 +7,6 @@
 	import data from '../../lib/app/server/data.json';
 	// import { regSchema } from '../../schema';
 	import Dropdown from '$lib/app/component/Dropdown.svelte';
-	import { FALSE } from 'sass';
 
 	let formData = {
 		accountType: '',
@@ -38,6 +37,8 @@
 	};
 
 	const emailRegex = /^\S+@\S+\.\S+$/;
+	const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+	const isValidPhone =/^(1\s?)?(\d{3}|\(\d{3}\))[\s\-]?\d{3}[\s\-]?\d{4}$/gm;
 
 	let selectedItemDropdown: string | undefined;
 	let selectedAccount: string | undefined;
@@ -45,6 +46,8 @@
 	let lastNameError: string;
 	let emailError: string;
 	let companyNameError: string;
+	let zipCodeError: string;
+	let phoneError: string;
 
 	// Reactive validation logic
 	$: errors.firstName =
@@ -52,9 +55,9 @@
 	$: errors.lastName =
 		formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
 	$: errors.email = !emailRegex.test(formData.email) ? 'Must enter a valid email address.' : '';
-	$: errors.phone = !emailRegex.test(formData.phone) ? 'Must enter a valid phone number.' : '';
-
+	$: errors.phone = !isValidPhone.test(formData.phone) ? 'Must enter a valid phone number.' : '';
 	$: errors.companyName = formData.companyName.length > 0 ? 'Must enter a Company Name' : '';
+	$: errors.zip =!isValidZip.test(formData.companyZip) ? 'Must enter a valid US zipcode.' : ''; 
 	// Check if the form is valid
 	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
 
@@ -69,6 +72,8 @@
 			lastNameError = errors.lastName;
 			emailError = errors.email;
 			companyNameError = errors.companyName;
+			zipCodeError = errors.zip;
+			phoneError = errors.phone;
 			//log errors if form is not valid//
 			console.log(event.errors);
 		}
@@ -167,6 +172,9 @@
 							{#if !isFormValid && companyNameError !== undefined}
 								<p class={errors.companyName ? 'alert alert-danger' : ''}>{companyNameError}</p>
 							{/if}
+							{#if !isFormValid && zipCodeError !== undefined}
+							<p class={errors.zip? 'alert alert-danger' : ''}>{zipCodeError}</p>
+						   {/if}
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
 								{#if formData.accountOrigin !== 'existing'}
@@ -291,6 +299,9 @@
 							{#if !isFormValid && emailError !== undefined}
 								<p class={errors.email ? 'alert alert-danger' : ''}>{emailError}</p>
 							{/if}
+							{#if !isFormValid && phoneError!== undefined}
+							<p class={errors.phone ? 'alert alert-danger' : ''}>{phoneError}</p>
+						   {/if}
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
 								<div class="col-12 col-xl-9">
