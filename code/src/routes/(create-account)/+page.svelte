@@ -7,6 +7,7 @@
 	import data from '../../lib/app/server/data.json';
 	// import { regSchema } from '../../schema';
 	import Dropdown from '$lib/app/component/Dropdown.svelte';
+	import { FALSE } from 'sass';
 
 	let formData = {
 		accountType: '',
@@ -16,7 +17,7 @@
 		email: '',
 		phone: '',
 		job: '',
-		existingCoName:'',
+		existingCoName: '',
 		companyName: '',
 		companyPhone: '',
 		companyAddress: '',
@@ -32,32 +33,44 @@
 		lastName: '',
 		email: '',
 		phone: '',
-		zip:''
+		zip: '',
+		companyName: ''
 	};
 
 	const emailRegex = /^\S+@\S+\.\S+$/;
 
-	let selected: string | boolean | undefined
 	let selectedItemDropdown: string | undefined;
-	let selectedAccount: string | undefined
+	let selectedAccount: string | undefined;
+	let firstNameError: string;
+	let lastNameError: string;
+	let emailError: string;
+	let companyNameError: string;
+
 	// Reactive validation logic
 	$: errors.firstName =
 		formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
 	$: errors.lastName =
 		formData.lastName.length < 2 ? 'Last name must be at least 2 characters long.' : '';
 	$: errors.email = !emailRegex.test(formData.email) ? 'Must enter a valid email address.' : '';
+	$: errors.phone = !emailRegex.test(formData.phone) ? 'Must enter a valid phone number.' : '';
 
+	$: errors.companyName = formData.companyName.length > 0 ? 'Must enter a Company Name' : '';
 	// Check if the form is valid
 	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
 
 	async function handleSubmit(event: any) {
 		event.preventDefault();
-		if (isFormValid !== undefined) {
+		if (isFormValid === true) {
 			const queryParams = new URLSearchParams(formData).toString();
 			await goto(`/member-account?${queryParams}`);
 		} else {
+			//set errors only on submit for a better UX//
+			firstNameError = errors.firstName;
+			lastNameError = errors.lastName;
+			emailError = errors.email;
+			companyNameError = errors.companyName;
 			//log errors if form is not valid//
-			console.log(event.errors)
+			console.log(event.errors);
 		}
 	}
 </script>
@@ -126,7 +139,7 @@
 													id="accountCreateNew"
 													name="accountCreateType"
 													value="new company"
-													selectedAccount=''
+													selectedAccount=""
 													selected
 													bind:companyType={formData.accountOrigin}
 													flexGrow>New Company</BoxedRadio
@@ -138,7 +151,7 @@
 													value="existing"
 													selected
 													bind:companyType={formData.accountOrigin}
-													selectedAccount=''
+													selectedAccount=""
 													flexGrow>Existing Company</BoxedRadio
 												>
 											</div>
@@ -151,13 +164,16 @@
 					<!-- company information -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Company Information">
+							{#if !isFormValid && companyNameError !== undefined}
+								<p class={errors.companyName ? 'alert alert-danger' : ''}>{companyNameError}</p>
+							{/if}
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
 								{#if formData.accountOrigin !== 'existing'}
 									<div id="companyInformationCollapse" class="col-12 col-xl-9">
 										<div class="wk-pb-4">
 											<Label for="companyName" class="form-Label fw-bold mb-2">
-												<span class={formData.accountType === 'corporate' || formData.accountType === 'application service' ? 'required' : 'not-required'}>
+												<span class={formData.accountType === 'corporate' || formData.accountType === 'application service'? 'required' : 'not-required'}>
 													*
 												</span>Company Name
 											</Label>
@@ -266,15 +282,14 @@
 					<!-- member information -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Member Information">
-							{#if !isFormValid && formData.firstName.length > 0 && formData.firstName.length < 2}
-							<p class="alert alert-danger">{errors.firstName}</p>
-					
+							{#if !isFormValid && firstNameError}
+								<p class={errors.firstName ? 'alert alert-danger' : ''}>{firstNameError}</p>
 							{/if}
-							{#if !isFormValid && formData.lastName.length > 0 && formData.lastName.length < 2}
-							<p class="alert alert-danger">{errors.lastName}</p>
+							{#if !isFormValid && lastNameError !== undefined}
+								<p class={errors.lastName ? 'alert alert-danger' : ''}>{lastNameError}</p>
 							{/if}
-							{#if !isFormValid && formData.email.length > 0 && formData.email.length < 2}
-							<p class="alert alert-danger">{errors.email}</p>
+							{#if !isFormValid && emailError !== undefined}
+								<p class={errors.email ? 'alert alert-danger' : ''}>{emailError}</p>
 							{/if}
 							<div class="row wk-p-8 wk-pt-4">
 								<div class=" col-12 col-xl-3 d-none d-lg-block"></div>
@@ -285,17 +300,17 @@
 												>*First Name</Label
 											>
 											<Input
-												id={errors.firstName !== '' && !isFormValid ? 'error-outline' : 'memberFirstName'}
+												id={errors.firstName ? 'error-outline' : 'memberFirstName'}
 												type="text"
 												name="memberFirstName"
-												class= 'form-control'
+												class="form-control"
 												bind:value={formData.firstName}
 											/>
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="memberLastName" class="form-Label fw-bold mb-2">*Last Name</Label>
 											<Input
-											    id={errors.firstName !== '' ? 'error-outline' : 'memberLastName'}
+												id={errors.firstName !== '' ? 'error-outline' : 'memberLastName'}
 												type="text"
 												name="memberLastName"
 												class="form-control"
@@ -307,13 +322,12 @@
 										<div class="col-12 col-md-6 wk-pb-4 wk-pb-md-0">
 											<Label for="memberEmail" class="form-Label fw-bold mb-2">*Email</Label>
 											<Input
-											   id={errors.firstName !== '' ? 'error-outline' : 'memberEmail'}
+												id={errors.firstName !== '' ? 'error-outline' : 'memberEmail'}
 												type="text"
 												name="memberEmail"
 												class="form-control"
 												bind:value={formData.email}
 											/>
-				
 										</div>
 										<div class="col-12 col-md-6">
 											<Label for="jobTitle" class="form-Label fw-bold mb-2">Job Title</Label>
@@ -385,11 +399,8 @@
 					</Accordion>	 -->
 
 					<div>
-						<button
-							id="submitCreateAccountBtn"
-							type="submit"
-							disabled={!isFormValid}
-							class="btn btn-lg wk-btn-theme">Submit</button
+						<button id="submitCreateAccountBtn" type="submit" class="btn btn-lg wk-btn-theme"
+							>Submit</button
 						>
 					</div>
 				</form>
@@ -407,8 +418,8 @@
 		--bs-accordion-active-bg: transparent;
 	}
 	input#error-outline {
-    border: 1px solid red;
-}
+		border: 1px solid red !important;
+	}
 
 	div :global(.accordion-button) {
 		font-weight: 800;
@@ -423,11 +434,9 @@
 
 	p.error {
 		display: none;
-
-
 	}
 
-	span.not-required{
+	span.not-required {
 		visibility: hidden;
 	}
 
@@ -438,6 +447,4 @@
 	p.error:focus {
 		display: block;
 	}
-
-
 </style>

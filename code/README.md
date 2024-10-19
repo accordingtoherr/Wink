@@ -32,10 +32,10 @@ You are tasked with enhancing a provided SvelteKit application that includes a f
 
 - **Form Validation**
   - **Member:**
-    - First Name, Last Name, and Email is required. - check
+    - First Name, Last Name, and Email is required. -
     - Email must be a valid email address.
   - **Company Name:**
-    - Required field if the account type is "Corporate" or "Application Service". check
+    - Required field if the account type is "Corporate" or "Application Service"
   - **Phone Number:**
     - Must be a valid phone number format.
   - **Zip Code:**

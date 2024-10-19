@@ -56,7 +56,9 @@
   <p>{firstName} {lastName}</p>
   <p> {email}</p>
   <p><strong>Phone:</strong> {phone}</p>
+  {#if job}
   <p><strong>Job:</strong> {job}</p>
+  {/if}
 
 
 <h2>Company Information</h2>
