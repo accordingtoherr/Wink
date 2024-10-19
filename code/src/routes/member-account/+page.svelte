@@ -52,23 +52,17 @@
    <div class="form-Label fw-bold mb-2 d-flex flex-column flex-sm-row wk-gap-4 row wk-p-8 wk-pt-4 accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 
  <h2>Member Information</h2>
- <p class='type'><strong>Type of Account:</strong> {accountType}</p>
- <p><strong>Member Account Origin</strong> {accountOrigin}</p>
-  <p><strong>First Name:</strong> {firstName}</p>
-  <p><strong>Last Name:</strong> {lastName}</p>
-  <p><strong>Email:</strong> {email}</p>
+ <p class='type'><strong>{accountType} Account</p>
+  <p>{firstName} {lastName}</p>
+  <p> {email}</p>
   <p><strong>Phone:</strong> {phone}</p>
   <p><strong>Job:</strong> {job}</p>
- 
-</div>
 
-</div>
-<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
-  <div class="form-Label fw-bold mb-2 d-flex flex-column flex-sm-row wk-gap-4 row wk-p-8 wk-pt-4 accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 
 <h2>Company Information</h2>
  {#if accountOrigin === 'existing'}
- <p><strong>Existing Company Name:</strong> {existingCoName}</p>
+ <p>Existing Company</p>
+ <p>{existingCoName}</p>
  {/if}
  {#if accountOrigin !== 'existing'}
  <p><strong>Name:</strong> {companyName}</p>

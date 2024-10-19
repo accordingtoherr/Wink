@@ -16,6 +16,7 @@
 		email: '',
 		phone: '',
 		job: '',
+		existingCoName:'',
 		companyName: '',
 		companyPhone: '',
 		companyAddress: '',
@@ -29,13 +30,16 @@
 	let errors = {
 		firstName: '',
 		lastName: '',
-		email: ''
+		email: '',
+		phone: '',
+		zip:''
 	};
 
 	const emailRegex = /^\S+@\S+\.\S+$/;
 
 	let selected: string | boolean | undefined
 	let selectedItemDropdown: string | undefined;
+	let selectedAccount: string | undefined
 	// Reactive validation logic
 	$: errors.firstName =
 		formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
@@ -87,14 +91,16 @@
 												id="accountTypeCorporate"
 												name="accountType"
 												value="corporate"
-												bind:selected
+												selected
+												bind:selectedAccount={formData.accountType}
 												flexGrow>Corporate</BoxedRadio
 											>
 											<BoxedRadio
 												companyType=""
-												bind:selected={formData.accountType}
+												bind:selectedAccount={formData.accountType}
 												id="accountTypeAgent"
 												name="accountType"
+												selected
 												value="agent"
 												flexGrow>Agent</BoxedRadio
 											>
@@ -103,7 +109,8 @@
 												companyType=""
 												id="accountTypeAppService"
 												name="accountType"
-												bind:selected={formData.accountType}
+												selected
+												bind:selectedAccount={formData.accountType}
 												value="application service"
 												flexGrow>Application Service</BoxedRadio
 											>
@@ -119,6 +126,7 @@
 													id="accountCreateNew"
 													name="accountCreateType"
 													value="new company"
+													selectedAccount=''
 													selected
 													bind:companyType={formData.accountOrigin}
 													flexGrow>New Company</BoxedRadio
@@ -128,8 +136,9 @@
 													id="accountCreateExisting"
 													name="accountCreateType"
 													value="existing"
-													bind:companyType={formData.accountOrigin}
 													selected
+													bind:companyType={formData.accountOrigin}
+													selectedAccount=''
 													flexGrow>Existing Company</BoxedRadio
 												>
 											</div>
@@ -147,11 +156,16 @@
 								{#if formData.accountOrigin !== 'existing'}
 									<div id="companyInformationCollapse" class="col-12 col-xl-9">
 										<div class="wk-pb-4">
-											<Label for="companyName" class="form-Label fw-bold mb-2">Company Name</Label>
+											<Label for="companyName" class="form-Label fw-bold mb-2">
+												<span class={formData.accountType === 'corporate' || formData.accountType === 'application service' ? 'required' : 'not-required'}>
+													*
+												</span>Company Name
+											</Label>
 											<Input
 												bind:value={formData.companyName}
 												id="companyName"
 												type="text"
+												required={formData.accountType === 'agent' ? false : true}
 												name="companyName"
 												class="form-control"
 											/>
@@ -244,7 +258,7 @@
 								{#if formData.accountOrigin === 'existing'}
 									<Label for="existingCompany" class="form-Label fw-bold mb-2 dropdown"
 										>*Select Existing Company</Label
-									><Dropdown {selectedItemDropdown} bind:value={selectedItemDropdown} />
+									><Dropdown {selectedItemDropdown} bind:value={formData.existingCoName} />
 								{/if}
 							</div>
 						</AccordionItem>
@@ -411,6 +425,14 @@
 		display: none;
 
 
+	}
+
+	span.not-required{
+		visibility: hidden;
+	}
+
+	span.required {
+		visibility: visible;
 	}
 
 	p.error:focus {
