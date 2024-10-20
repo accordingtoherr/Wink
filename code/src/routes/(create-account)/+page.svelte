@@ -42,6 +42,7 @@
 
 	let selectedItemDropdown: string | undefined;
 	let selectedAccount: string | undefined;
+	let selected: string | undefined;
 	let firstNameError: string;
 	let lastNameError: string;
 	let emailError: string;
@@ -85,7 +86,7 @@
 		class="d-flex w-100 mb-0 wk-pe-0 wk-ps-0 wk-ps-lg-8 wk-pt-0 wk-pt-lg-4"
 		style="min-height: 100%; height: fit-content;"
 	>
-		<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
+		<div class="wk-p-4 wk-p-lg-8 w-100 wk-shadow-lg  wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 			<div class="d-flex flex-column align-items-start">
 				<h1 class="wk-fs-3xl">Create Account</h1>
 				<p class="subtitle">
@@ -379,20 +380,22 @@
 						</AccordionItem>
 					</Accordion>
 					<!-- Subscription/Billing -->
-					<!-- <Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
+					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Subscription/Billing">
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 							<SubscriptionTypes 
 							name="AnnuitySpecs"
 							value="existing"
 							bind:selected
 							/>
+							</div>
 							<SubscriptionTypes 
 							name="LifeSpecs"
 							value="existing"
 							bind:selected
 							/>
 			
-								{#if selected !== 'agent' }
+								{#if formData.accountType !== 'agent' }
 								<SubscriptionTypes 
 								name="Sales & Market Report"
 								value="existing"
@@ -407,7 +410,7 @@
 			 
 							{/if}
 						</AccordionItem>
-					</Accordion>	 -->
+					</Accordion>	 
 
 					<div>
 						<button id="submitCreateAccountBtn" type="submit" class="btn btn-lg wk-btn-theme"
