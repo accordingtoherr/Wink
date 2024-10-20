@@ -1,95 +1,90 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+	import { page } from '$app/stores';
 
-	let firstName:  string;
+	let firstName: string;
 	let accountType: string;
-  let accountOrigin: string;
-  let lastName: string;
-  let email: string;
-  let job: string;
-  let phone: string;
-  let selectedCoDropdown: string;
-  let companyState: string;
-  let companyAddress: string;
-  let companySuite: string;
-  let companyZip: string;
-  let companyCity: string;
-  let companyName: string;
-  let companyPhone: string;
-  let companyUrl: string;
-  let existingCoName: string;
+	let accountOrigin: string;
+	let lastName: string;
+	let email: string;
+	let job: string;
+	let phone: string;
+	let selectedCoDropdown: string;
+	let companyState: string;
+	let companyAddress: string;
+	let companySuite: string;
+	let companyZip: string;
+	let companyCity: string;
+	let companyName: string;
+	let companyPhone: string;
+	let companyUrl: string;
+	let existingCoName: string;
 
+	// Subscribe to page store to get the query parameters
+	$: {
+		const params = new URLSearchParams($page.url.search);
 
-  // Subscribe to page store to get the query parameters
-  $: {
-    const params = new URLSearchParams($page.url.search);
-
-    firstName = params.get('firstName') || '';
-    lastName = params.get('lastName') || '';
-    email = params.get('email') || '';
-    phone = params.get('phone') || '';
-    job = params.get('job') || '';
-    companyName = params.get('companyName') || '';
-    companyUrl = params.get('companyUrl') || '';
-    companyPhone = params.get('companyPhone') || '';
-    companyAddress = params.get('companyAddress') || '';
-    companySuite = params.get('companySuite') || '';
-    companyCity = params.get('companyCity') || '';
-    companyState = params.get('companyState') || '';
-    accountType = params.get('accountType') || '';
-    accountOrigin = params.get('accountOrigin') || '';
-    existingCoName = params.get('existingCoName') || '';
-  }
-
-
+		firstName = params.get('firstName') || '';
+		lastName = params.get('lastName') || '';
+		email = params.get('email') || '';
+		phone = params.get('phone') || '';
+		job = params.get('job') || '';
+		companyName = params.get('companyName') || '';
+		companyUrl = params.get('companyUrl') || '';
+		companyPhone = params.get('companyPhone') || '';
+		companyAddress = params.get('companyAddress') || '';
+		companySuite = params.get('companySuite') || '';
+		companyCity = params.get('companyCity') || '';
+		companyState = params.get('companyState') || '';
+		accountType = params.get('accountType') || '';
+		accountOrigin = params.get('accountOrigin') || '';
+		existingCoName = params.get('existingCoName') || '';
+	}
 </script>
+
 <main class="container-fluid px-0 overflow-y-auto">
-	<div
-		class=""
-		style="min-height: 100%; height: fit-content;"
-	>
-  <div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
-   <div class="form-Label fw-bold mb-2 d-flex flex-column flex-sm-row wk-gap-4 row wk-p-8 wk-pt-4 accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
+	<div class="" style="min-height: 100%; height: fit-content;">
+		<div class="wk-p-4 wk-p-lg-8 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
+			<div
+				class="form-Label fw-bold mb-2 d-flex flex-column flex-sm-row wk-gap-4 row wk-p-8 wk-pt-4 accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion"
+			>
+				<h2>Member Information</h2>
+				<p class="type"><strong>{accountType} Account</strong></p>
+				<p>{firstName} {lastName}</p>
+				<p>{email}</p>
+				<p><strong>Phone:</strong> {phone}</p>
+				{#if job}
+					<p><strong>Job:</strong> {job}</p>
+				{/if}
 
- <h2>Member Information</h2>
- <p class='type'><strong>{accountType} Account</p>
-  <p>{firstName} {lastName}</p>
-  <p> {email}</p>
-  <p><strong>Phone:</strong> {phone}</p>
-  {#if job}
-  <p><strong>Job:</strong> {job}</p>
-  {/if}
+				<h2>Company Information</h2>
+				{#if accountOrigin === 'existing'}
+					<p>Existing Company</p>
+					<p>{existingCoName}</p>
+				{/if}
+				{#if accountOrigin !== 'existing'}
+					<p><strong>Name:</strong> {companyName}</p>
+					<p><strong>Address:</strong> {companyAddress}</p>
 
+					<p><strong>Phone:</strong> {companyPhone}</p>
+					<p><strong>Address:</strong> {companyPhone}</p>
+					{#if companySuite !== ''}
+						<p><strong>Suite:</strong> {companySuite}</p>
+					{/if}
+					<p><strong>City:</strong> {companyCity}</p>
+					<p><strong>State:</strong> {companyState}</p>
+					{#if companyZip}
+						<p><strong>Zip:</strong> {companyZip}</p>
+					{/if}
+				{/if}
 
-<h2>Company Information</h2>
- {#if accountOrigin === 'existing'}
- <p>Existing Company</p>
- <p>{existingCoName}</p>
- {/if}
- {#if accountOrigin !== 'existing'}
- <p><strong>Name:</strong> {companyName}</p>
- <p><strong>Address:</strong> {companyAddress}</p>
-
- <p><strong>Phone:</strong> {companyPhone}</p>
- <p><strong>Address:</strong> {companyPhone}</p>
- {#if companySuite !== ''}
- <p><strong>Suite:</strong> {companySuite}</p>
- {/if}
- <p><strong>City:</strong> {companyCity}</p>
- <p><strong>State:</strong> {companyState}</p>
- {#if companyZip}
- <p><strong>Zip:</strong> {companyZip}</p>
- {/if}
-{/if}
-</div>
-
-</div>
-
-</div>
+        <h2>Subscription and Billing Information</h2>
+			</div>
+		</div>
+	</div>
 </main>
 
 <style>
-  .type {
-    text-transform: capitalize;
-  }
+	.type {
+		text-transform: capitalize;
+	}
 </style>

@@ -11,6 +11,8 @@
 	let formData = {
 		accountType: '',
 		accountOrigin: '',
+		selectedSub: '',
+		selectedSubExpireDate:'',
 		firstName: '',
 		lastName: '',
 		email: '',
@@ -381,35 +383,36 @@
 					</Accordion>
 					<!-- Subscription/Billing -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
+						{console.log('se', selected)}
 						<AccordionItem active header="Subscription/Billing">
-							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-shadow-lg wk-theme-surface-light wk-rounded-top-start-lg-3xl">
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-shadow-lg wk-theme-surface-light wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 							<SubscriptionTypes 
 							name="AnnuitySpecs"
 							value="existing"
-							bind:selected
+							bind:selectedSub={formData.selectedSub}
 							/>
 							</div>
-							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 							<SubscriptionTypes 
 							name="LifeSpecs"
 							value="existing"
-							bind:selected
+							bind:selectedSub={formData.selectedSub}
 							/>
 							</div>
 			
 								{#if formData.accountType !== 'agent' }
-								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
+								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
 								<SubscriptionTypes 
 								name="Sales & Market Report"
 								value="existing"
-								bind:selected
+								bind:selectedSub={formData.selectedSub}
 								/>
 								</div>
 								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 								<SubscriptionTypes 
 								name="Index Intelligence Report"
 								value="existing"
-								bind:selected
+								bind:selectedSub={formData.selectedSub}
 								/>
 								</div>
 			 
@@ -446,6 +449,9 @@
 		color: var(--neutral-text-title) !important;
 		font-family: var(--bs-body-font-family);
 	}
+	label.form-Label.fw-bold.mb-2.color.form-label {
+	color: #5D5BA0;
+}
 
 	label.dropdown {
 		padding-left: 0;
