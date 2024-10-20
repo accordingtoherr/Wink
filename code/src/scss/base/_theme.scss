@@ -129,6 +129,7 @@
 	--theme-surface-mid-light: var(--as-surface-mid-light);
 	--theme-surface-medium: var(--as-surface-medium);
 	--theme-surface-main: var(--as-surface-main);
+	--theme-surface-annuity: var(--as-surface-light);
 	--theme-surface-darker: var(--as-surface-darker);
 
 	--theme-icon-light: var(--as-icon-light);
@@ -346,6 +347,20 @@
 .wk-theme-surface-main {
 	background-color: var(--theme-surface-main) !important;
 }
+
+.wk-theme-surface-main {
+	background-color: var(--theme-surface-main) !important;
+}
+.wk-theme-surface-purle{
+	background-color: var(--theme-surface-main) !important;
+}
+.wk-theme-surface-main {
+	background-color: var(--theme-surface-main) !important;
+}
+.wk-theme-surface-main {
+	background-color: var(--theme-surface-main) !important;
+}
+
 .wk-theme-surface-darker {
 	background-color: var(--theme-surface-darker) !important;
 }

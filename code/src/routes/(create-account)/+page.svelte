@@ -382,31 +382,36 @@
 					<!-- Subscription/Billing -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
 						<AccordionItem active header="Subscription/Billing">
-							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-shadow-lg wk-theme-surface-light wk-rounded-top-start-lg-3xl">
 							<SubscriptionTypes 
 							name="AnnuitySpecs"
 							value="existing"
 							bind:selected
 							/>
 							</div>
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 							<SubscriptionTypes 
 							name="LifeSpecs"
 							value="existing"
 							bind:selected
 							/>
+							</div>
 			
 								{#if formData.accountType !== 'agent' }
+								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 								<SubscriptionTypes 
 								name="Sales & Market Report"
 								value="existing"
 								bind:selected
 								/>
+								</div>
+								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
 								<SubscriptionTypes 
 								name="Index Intelligence Report"
 								value="existing"
 								bind:selected
 								/>
-				
+								</div>
 			 
 							{/if}
 						</AccordionItem>

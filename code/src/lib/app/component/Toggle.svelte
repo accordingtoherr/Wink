@@ -14,7 +14,7 @@
   console.log
 
 </script>
-
+{selected}
 <label
 	for={id}
 	class:flex-grow-1={flexGrow}
@@ -26,7 +26,7 @@
    aria-checked=false
     tabindex="0" 
     type="checkbox">
-	<span class="slider round"></span>
+	<span class="slider round "></span>
   </label>
 </label>
 
