@@ -468,7 +468,8 @@ function handleToggledYes(event: any) {
 	}
 
 	.sub-wrapper {
-		display: flex;
-		justify-content: space-around;
+	    display: flex;
+		flex-wrap: wrap;
+		justify-content: end;
 	}
 </style>

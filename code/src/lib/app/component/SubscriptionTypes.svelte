@@ -37,36 +37,54 @@
 	}
 </script>
 
-<!-- <div class="sub-wrapper wk-pb-4 item wk-p-4 wk-p-lg-8 w-100 wk-rounded-top-start-lg-3xl"> -->
 	{#each items as item, index}
-		<div class="sub-item">
+		<div class="{item.name === 'AnnuitySpecs' ? 'sub-item annuity wk-rounded wk-shadow-lg ' : 'sub-item wk-rounded wk-shadow-lg '}">
 			<Toggle
 				id="toggle"
 				value="existing"
 				bind:isToggled={item.isToggled}
 				on:toggleChanged={(e) => handleToggleChanged(index, e.detail, date)}
 			/>
-			<h3>{item.name}</h3>
+			<div class="name">
+			<h4>{item.name}</h4>
 				<div>Begin Date: <strong>{date}</strong></div>
-			
-			
-		</div>
-		<div class="col-4 col-md-4">
+			</div>
+		<div class="col-4 col-md-4 expire">
 			<Label for="expirationDate" class="form-Label fw-bold mb-2">*Expiration Date</Label>
 			<Input id="expirationDate" type="date" name="expirationDate" class="form-control" />
 		</div>
+	</div>
+
 	{/each}
-	<!-- <div class="col-6 col-md-6 wk-pb-4 wk-pb-md-0">
-		<Label for="accountCreateExisting" class="form-Label fw-bold mb-2">{name}</Label>
-		<div>Begin Date: <strong>{date}</strong></div>
-	</div> -->
-
-
-<!-- </div> -->
 
 <style>
-	.sub-wrapper {
-		display: flex;
-		justify-content: space-around;
-	}
+ .sub-item {
+	width: 80%;
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+	padding:5px;
+	border-radius:25px;
+ }
+
+ .sub-item.annuity {
+	background-color:#F4EEFB
+ }
+
+ .sub-item .name {
+    text-align: left;
+    width: 100%;
+}
+
+.sub-item h3 {
+	text-align: left;
+}
+
+ .expire {
+	display: flex;
+    flex-direction: column;
+    width: 10rem;
+ }
+
+
 </style>

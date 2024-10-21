@@ -12,7 +12,7 @@
 
 	$: checked = group !== undefined ? group === value : checked;
 	$: selectedAccount = 'new';
-	$: companyType= 'new';
+	$: companyType= '';
 
 
 	const selectOption = (value: string, id: string) => {
@@ -20,12 +20,12 @@
   };
 
 </script>
+
 {#if companyType === ''}
 <label
 	for={id}
 	class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer {selectedAccount !== value ? 'wk-theme-shadow-glow' : 'wk-theme-border-main'}"
 	class:flex-grow-1={flexGrow}>
-
 
 
 	<div class="form-check" >
@@ -34,7 +34,7 @@
 	</div>
 </label>
 {/if}
-{#if companyType }
+{#if companyType !== '' }
 <label
 	for={id}
 	class="bg-transparent border border-1 btn px-3 py-2 rounded-3 text-start wk-cursor-pointer {companyType !== value ? 'wk-theme-shadow-glow' : 'wk-theme-border-main'}"

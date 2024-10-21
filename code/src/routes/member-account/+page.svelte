@@ -56,6 +56,7 @@
       <h2>Thank you for signing up!</h2>
       <hr>
 				<h3>Member Information</h3>
+        <div class="member-info">
 				<p class="type"><strong>{accountType} Account</strong></p>
 				<p>{firstName} {lastName}</p>
 				<p>{email}</p>
@@ -63,6 +64,7 @@
 				{#if job}
 					<p><strong>Job:</strong> {job}</p>
 				{/if}
+        </div>
         <hr>
 				<h3>Company Information</h3>
 				{#if accountOrigin === 'existing'}
@@ -85,9 +87,11 @@
 					{/if}
 				{/if}
         <hr>
+        {#if subscriptionType}
         <h3>Subscription and Billing Information</h3>
         <p><strong>Subscription Type:</strong> {subscriptionType}</p>
         <p>Expiring on {subscriptionExpire}</p>
+        {/if}
 			</div>
 		</div>
 	</div>
@@ -103,6 +107,10 @@
     color: #5d5ba0;
   }
 
+  h3 {
+    text-align: center;
+    color:#242445;
+  }
 
   
 </style>
