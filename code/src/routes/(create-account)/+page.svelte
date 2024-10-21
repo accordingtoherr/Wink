@@ -1,17 +1,33 @@
 <script lang="ts">
-	//TO DO bonus section colors, 4 validation//
-	import { goto } from '$app/navigation'; // Import goto for navigation
+	import { goto } from '$app/navigation'; 
 	import BoxedRadio from '$lib/app/component/BoxedRadio.svelte';
 	import SubscriptionTypes from '$lib/app/component/SubscriptionTypes.svelte';
 	import { Accordion, AccordionItem, Input, Label } from '@sveltestrap/sveltestrap';
-	import data from '../../lib/app/server/data.json';
-	// import { regSchema } from '../../schema';
 	import Dropdown from '$lib/app/component/Dropdown.svelte';
+
+	
+	const emailRegex = /^\S+@\S+\.\S+$/;
+	const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+	const isValidPhone =/^(1\s?)?(\d{3}|\(\d{3}\))[\s\-]?\d{3}[\s\-]?\d{4}$/gm;
+
+	let selectedItemDropdown: string | undefined;
+	let selectedAccount: string | undefined;
+	let selected: string | undefined;
+	let firstNameError: string;
+	let lastNameError: string;
+	let emailError: string;
+	let companyNameError: string;
+	let zipCodeError: string;
+	let phoneError: string;
+	let toggledYesValues: string[] = [];
+	let toggledValue: string;
+
+
 
 	let formData = {
 		accountType: '',
 		accountOrigin: '',
-		selectedSub: '',
+		selectedSub: toggledYesValues.join(''),
 		selectedSubExpireDate:'',
 		firstName: '',
 		lastName: '',
@@ -38,20 +54,6 @@
 		companyName: ''
 	};
 
-	const emailRegex = /^\S+@\S+\.\S+$/;
-	const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-	const isValidPhone =/^(1\s?)?(\d{3}|\(\d{3}\))[\s\-]?\d{3}[\s\-]?\d{4}$/gm;
-
-	let selectedItemDropdown: string | undefined;
-	let selectedAccount: string | undefined;
-	let selected: string | undefined;
-	let firstNameError: string;
-	let lastNameError: string;
-	let emailError: string;
-	let companyNameError: string;
-	let zipCodeError: string;
-	let phoneError: string;
-
 	// Reactive validation logic
 	$: errors.firstName =
 		formData.firstName.length < 2 ? 'First name must be at least 2 characters long.' : '';
@@ -64,10 +66,27 @@
 	// Check if the form is valid
 	$: isFormValid = !errors.firstName && !errors.lastName && !errors.email;
 
+	
+
+// Handle the event when the parent notifies that the toggle was set to "Yes"
+function handleToggledYes(event: any) {
+  const { name } = event.detail;
+  // Add the name to the list if it was toggled to Yes
+  if (!toggledYesValues.includes(name)) {
+	toggledYesValues = [name]; // Only one can be toggled
+	formData.selectedSub = event.detail.name;
+	formData.selectedSubExpireDate = event.detail.date;
+
+  }
+}
+  // Add the item name to the list if toggled to Yes
+
+
 	async function handleSubmit(event: any) {
 		event.preventDefault();
 		if (isFormValid === true) {
-			const queryParams = new URLSearchParams(formData).toString();
+			const queryParams = new URLSearchParams(formData).toString()
+			console.log('q', queryParams)
 			await goto(`/member-account?${queryParams}`);
 		} else {
 			//set errors only on submit for a better UX//
@@ -383,40 +402,15 @@
 					</Accordion>
 					<!-- Subscription/Billing -->
 					<Accordion stayOpen class="accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg">
-						{console.log('se', selected)}
 						<AccordionItem active header="Subscription/Billing">
-							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-shadow-lg wk-theme-surface-light wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
-							<SubscriptionTypes 
-							name="AnnuitySpecs"
-							value="existing"
-							bind:selectedSub={formData.selectedSub}
-							/>
-							</div>
-							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
-							<SubscriptionTypes 
-							name="LifeSpecs"
-							value="existing"
-							bind:selectedSub={formData.selectedSub}
-							/>
-							</div>
 			
-								{#if formData.accountType !== 'agent' }
-								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
-								<SubscriptionTypes 
-								name="Sales & Market Report"
-								value="existing"
-								bind:selectedSub={formData.selectedSub}
-								/>
-								</div>
-								<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl">
-								<SubscriptionTypes 
-								name="Index Intelligence Report"
-								value="existing"
-								bind:selectedSub={formData.selectedSub}
-								/>
-								</div>
-			 
-							{/if}
+							<div class=" sub-wrapper wk-p-4 wk-p-lg-6 w-100 wk-theme-surface-subtle wk-rounded-top-start-lg-3xl accordion wk-max-w-8xl wk-rounded-2xl wk-shadow-lg accordion">
+
+								<SubscriptionTypes
+								value={formData.selectedSub} 
+								name={formData.selectedSub} 
+								on:toggledYes={handleToggledYes}  />
+							</div>
 						</AccordionItem>
 					</Accordion>	 
 
@@ -471,5 +465,10 @@
 
 	p.error:focus {
 		display: block;
+	}
+
+	.sub-wrapper {
+		display: flex;
+		justify-content: space-around;
 	}
 </style>
