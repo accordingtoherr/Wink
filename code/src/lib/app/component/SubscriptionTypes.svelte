@@ -37,8 +37,13 @@
 	}
 </script>
 
+{#if name !== 'agent'}
 	{#each items as item, index}
-		<div class="{item.name  ? `${item.name} sub-item wk-rounded wk-shadow-lg`  : 'sub-item wk-rounded wk-shadow-lg '}">
+		<div
+			class={item.name
+				? `${item.name} sub-item wk-rounded wk-shadow-lg`
+				: 'sub-item wk-rounded wk-shadow-lg '}
+		>
 			<Toggle
 				id="toggle"
 				value="existing"
@@ -46,76 +51,99 @@
 				on:toggleChanged={(e) => handleToggleChanged(index, e.detail, date)}
 			/>
 			<div class="name">
-			<h4>{item.name}</h4>
+				<h4>{item.name}</h4>
 				<div class="date">Begin Date: <strong>{date}</strong></div>
 			</div>
-		<div class="col-4 col-md-4 expire">
-			<Label for="expirationDate" class="form-Label fw-bold mb-2">*Expiration Date</Label>
-			<Input id="expirationDate" type="date" name="expirationDate" class="form-control" />
+			<div class="col-4 col-md-4 expire">
+				<Label for="expirationDate" class="form-Label fw-bold mb-2">*Expiration Date</Label>
+				<Input id="expirationDate" type="date" name="expirationDate" class="form-control" />
+			</div>
 		</div>
-	</div>
-
 	{/each}
+{/if}
+{#if name === 'agent'}
+	{#each items.slice(2) as item, index}
+		<div
+			class={item.name
+				? `${item.name} sub-item wk-rounded wk-shadow-lg`
+				: 'sub-item wk-rounded wk-shadow-lg '}
+		>
+			<Toggle
+				id="toggle"
+				value="existing"
+				bind:isToggled={item.isToggled}
+				on:toggleChanged={(e) => handleToggleChanged(index, e.detail, date)}
+			/>
+			<div class="name">
+				<h4>{item.name}</h4>
+				<div class="date">Begin Date: <strong>{date}</strong></div>
+			</div>
+			<div class="col-4 col-md-4 expire">
+				<Label for="expirationDate" class="form-Label fw-bold mb-2">*Expiration Date</Label>
+				<Input id="expirationDate" type="date" name="expirationDate" class="form-control" />
+			</div>
+		</div>
+	{/each}
+{/if}
 
 <style lang="scss">
+	@use '../../../scss/base/colors' as *;
 
-@use '../../../scss/base/colors' as *;
-
- .sub-item {
-	width: 80%;
-    margin-top: 1rem;
-    display: flex;
-	height: 6rem;
-    gap: 2rem;
-	padding:5px;
-	border-radius:25px;
- }
-
- .sub-item.AnnuitySpecs {
-	background-color:#F4EEFB
- }
-
- .sub-item.AnnuitySpecs h4 {
-   color:$purple
-}
-
-.sub-item.LifeSpecs h4 {
-   color: $orange-600;
-}
-
-.sub-item.Sales  h4 {
-   color:$green-600;
-}
-
-.sub-item.Index h4 {
-   color: $gray-600;
-}
-
- .sub-item .name {
-    text-align: left;
-    width: 100%;
-}
-
-.sub-item h4{
-	text-align: left;
-	font-family: 'Mulish';
-	font-size:18px;
-}
-
- .expire {
-	display: flex;
-    flex-direction: column;
-    width: 10rem;
- }
-
- .date {
-	font-size:14px;
- }
- 
- @media only screen and (max-width: 600px) {
 	.sub-item {
-	height: unset;
-	flex-wrap: wrap;
- }}
+		width: 80%;
+		margin-top: 1rem;
+		display: flex;
+		height: 6rem;
+		gap: 2rem;
+		padding: 5px;
+		border-radius: 25px;
+	}
 
+	.sub-item.AnnuitySpecs {
+		background-color: #f4eefb;
+	}
+
+	.sub-item.AnnuitySpecs h4 {
+		color: $purple;
+	}
+
+	.sub-item.LifeSpecs h4 {
+		color: $orange-600;
+	}
+
+	.sub-item.Sales h4 {
+		color: $green-600;
+	}
+
+	.sub-item.Index h4 {
+		color: $gray-600;
+	}
+
+	.sub-item .name {
+		text-align: left;
+		width: 100%;
+	}
+
+	.sub-item h4 {
+		text-align: left;
+		font-family: 'Mulish';
+		font-size: 18px;
+	}
+
+	.expire {
+		display: flex;
+		flex-direction: column;
+		width: 10rem;
+	}
+
+	.date {
+		font-size: 14px;
+	}
+
+	@media only screen and (max-width: 600px) {
+		.sub-item {
+			height: unset;
+			flex-wrap: wrap;
+		}
+	}
 </style>

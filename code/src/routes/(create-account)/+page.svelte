@@ -408,7 +408,7 @@ function handleToggledYes(event: any) {
 
 								<SubscriptionTypes
 								value={formData.selectedSub} 
-								name={formData.selectedSub} 
+								name={formData.accountType} 
 								on:toggledYes={handleToggledYes}  />
 							</div>
 						</AccordionItem>
