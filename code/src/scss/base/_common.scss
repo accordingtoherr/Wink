@@ -16,3 +16,18 @@
 .wk-shadow-2xl {
 	box-shadow: 0px 24px 48px -12px rgba($purple-900, 0.18);
 }
+
+//override for the slider//
+.sub-item.AnnuitySpecs label input:checked+.slider {
+	background-color: $purple;
+}
+.sub-item.LifeSpecs label input:checked+.slider {
+	background-color: $orange-600;
+}
+
+.sub-item.Sales label input:checked+.slider {
+	background-color: $green-600;
+}
+.sub-item.Index label input:checked+.slider {
+	background-color: $gray-600;
+}
